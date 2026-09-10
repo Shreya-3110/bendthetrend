@@ -1,0 +1,19 @@
+{
+  "name": "bend-the-trend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bend the Trend - Digital Marketing & Creative Agency Website",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite"
+  },
+  "devDependencies": {
+    "vite": "^5.4.14"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.115.0"
+  }
+}

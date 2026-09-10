@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bend The Trend: Digital Marketing Agency</title>
+  <meta name="description" content="Bend the Trend — Your brand deserves to be Seen, Heard, and Remembered. Digital marketing, branding, web design, and creative strategy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/img_1.png" />
+</head>
+<body>
+
+  <!-- ==================== STICKY HEADER ==================== -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#hero" class="logo" aria-label="Bend The Trend Home">
+        <span class="logo__brand">Bend</span>
+        <span class="logo__sub">— THE —</span>
+        <span class="logo__brand">Trend</span>
+      </a>
+      <button class="menu-btn" id="menuToggle" aria-label="Toggle navigation menu">
+        <span class="menu-btn__text">MENU</span>
+      </button>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu" id="dropdownMenu" aria-hidden="true">
+      <div class="dropdown-menu__container">
+        <nav class="dropdown-menu__nav">
+          <a href="#services" class="dropdown-menu__link">Services</a>
+          <a href="#benefits" class="dropdown-menu__link">Benefits</a>
+          <a href="portfolio.html" class="dropdown-menu__link">Portfolio</a>
+          <a href="#process" class="dropdown-menu__link">Process</a>
+          <a href="#comparison" class="dropdown-menu__link">Comparison</a>
+          <a href="#pricing" class="dropdown-menu__link">Pricing</a>
+          <a href="#about" class="dropdown-menu__link">About</a>
+          <a href="#faqs" class="dropdown-menu__link">FAQs</a>
+        </nav>
+        <a href="#contact" class="dropdown-menu__cta">Let's Talk</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION (#hero) ==================== -->
+  <section class="hero" id="hero">
+    <!-- Floating Sticker Badges -->
+    <div class="sticker sticker--timeless" aria-hidden="true">
+      <svg class="sticker__shape" viewBox="0 0 100 100">
+        <path d="M50 0 C60 25 75 25 100 50 C75 75 60 75 50 100 C40 75 25 75 0 50 C25 25 40 25 50 0 Z" fill="#ffffff" stroke="#121212" stroke-width="2" />
+      </svg>
+      <span class="sticker__text">Timeless</span>
+    </div>
+
+    <div class="sticker sticker--edgy" aria-hidden="true">
+      <svg class="sticker__shape" viewBox="0 0 100 100">
+        <path d="M50,0 L61,35 L98,35 L68,57 L79,91 L50,70 L21,91 L32,57 L2,35 L39,35 Z" fill="#ffffff" stroke="#121212" stroke-width="2"/>
+      </svg>
+      <span class="sticker__text">Edgy</span>
+    </div>
+
+    <div class="sticker sticker--creative" aria-hidden="true">
+      <div class="sticker__cloud">Creative</div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero__container">
+      <h1 class="hero__headline">Bend the Trend</h1>
+      <p class="hero__subheadline">Your brand deserves to be<br />Seen, Heard, and Remembered</p>
+    </div>
+
+    <!-- Semicircular Record Graphic with Grooves -->
+    <div class="hero__record" aria-hidden="true">
+      <div class="groove groove-1"></div>
+      <div class="groove groove-2"></div>
+      <div class="groove groove-3"></div>
+      <div class="groove groove-4"></div>
+      <div class="groove groove-5"></div>
+      <div class="groove groove-6"></div>
+      <div class="hero__dome"></div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTINUOUS MARQUEE TICKER ==================== -->
+  <div class="ticker-band" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Brand Strategy <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Social Media <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Content Creation <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Web Design <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Visual Identity <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Campaign Management <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Brand Strategy <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Social Media <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Content Creation <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Web Design <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Visual Identity <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Campaign Management <span class="ticker-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- ==================== THREE FEATURE CARDS ==================== -->
+  <section class="quick-features">
+    <div class="quick-features__scallop-top"></div>
+    <div class="container quick-features__grid">
+      <div class="quick-card reveal-on-scroll reveal-delay-1">
+        <div class="quick-card__image-wrapper">
+          <img src="assets/img_6.png" alt="Fast and Reliable Delivery" loading="lazy" />
+        </div>
+        <h3 class="quick-card__title">Fast and Reliable Delivery</h3>
+        <p class="quick-card__desc">We move at the speed of creativity — and caffeine. Your deadlines won't even see us coming.</p>
+      </div>
+
+      <div class="quick-card reveal-on-scroll reveal-delay-2">
+        <div class="quick-card__image-wrapper">
+          <img src="assets/img_8.png" alt="Clear, No-Surprise Pricing" loading="lazy" />
+        </div>
+        <h3 class="quick-card__title">Clear, No-Surprise Pricing</h3>
+        <p class="quick-card__desc">No hidden fees, no sneaky charges — just clear, honest pricing and work that makes you wonder.</p>
+      </div>
+
+      <div class="quick-card reveal-on-scroll reveal-delay-3">
+        <div class="quick-card__image-wrapper">
+          <img src="assets/img_10.png" alt="Everything, Under One Roof" loading="lazy" />
+        </div>
+        <h3 class="quick-card__title">Everything, Under One Roof</h3>
+        <p class="quick-card__desc">Design? Branding? Websites? TikTok dances? (Okay, maybe not that last one... yet.)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES SECTION (#services) ==================== -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-left">
+          <span>Services</span>
+        </div>
+        <h2 class="section-heading">What we do (and do really well)</h2>
+      </div>
+
+      <div class="services-accordion reveal-on-scroll" id="servicesAccordion">
+        <!-- Item 1 -->
+        <div class="service-row active">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Web Design and Development</h3>
+              <p class="service-row__preview">Pretty and powerful websites that actually work.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">−</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>From high-converting landing pages to custom web experiences, we build blazing-fast, responsive, and SEO-optimized sites that turn visitors into loyal paying customers.</p>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="service-row">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Graphic Designing</h3>
+              <p class="service-row__preview">Get seen. Get clicks. Get results.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">+</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>Visual assets that make people stop scrolling. Brand guidelines, marketing collateral, pitch decks, and digital ads designed with precision and punch.</p>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="service-row">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Content Creation</h3>
+              <p class="service-row__preview">Words, visuals, and videos that speak human.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">+</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>Authentic storytelling crafted for modern attention spans. Reels, scripts, photography, and copy that connects emotionally and drives organic engagement.</p>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="service-row">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Social Media Marketing</h3>
+              <p class="service-row__preview">Social media that doesn't just show up, it speaks up.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">+</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>Data-informed campaigns, vibrant community building, and viral content formats tailored for Instagram, LinkedIn, and TikTok growth.</p>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="service-row">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Customer Support Solutions</h3>
+              <p class="service-row__preview">Turn every inquiry into a lasting customer relationship.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">+</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>Dedicated, responsive, and empathetic support workflows across live chat, email, and social DMs that keep your customers delighted 24/7.</p>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="service-row">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Performance Marketing</h3>
+              <p class="service-row__preview">Data-driven ads engineered for maximum ROI.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">+</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>High-converting paid media campaigns across Meta, Google Ads, and TikTok with laser-focused targeting and continuous creative optimization.</p>
+          </div>
+        </div>
+
+        <!-- Item 7 -->
+        <div class="service-row">
+          <div class="service-row__header">
+            <div class="service-row__title-wrap">
+              <h3 class="service-row__title">Google and Local Growth</h3>
+              <p class="service-row__preview">Dominate search results and win your local market.</p>
+            </div>
+            <button class="service-row__btn" aria-label="Toggle details">
+              <span class="icon-toggle">+</span>
+            </button>
+          </div>
+          <div class="service-row__body">
+            <p>SEO, Google Business Profile optimization, and hyper-local search strategies designed to put your business at the top when customers are ready to buy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BENEFITS SECTION (#benefits) ==================== -->
+  <section class="benefits" id="benefits">
+    <div class="scallop-divider scallop-divider--cream-to-dark"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-right">
+          <span>Benefitsss</span>
+        </div>
+        <h2 class="section-heading section-heading--white">Why we are the best!</h2>
+      </div>
+
+      <!-- Bento-style Grid of Benefits -->
+      <div class="benefits-grid">
+        <!-- Row 1: 2 Cards -->
+        <div class="benefit-card benefit-card--span-6 tilt-card reveal-on-scroll reveal-delay-1">
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Creative Sparks</h3>
+            <p class="benefit-card__desc">We craft ideas that break the mold and make your brand unforgettable.</p>
+          </div>
+          <div class="benefit-card__img">
+            <img src="assets/img_13.png" alt="Creative Sparks" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="benefit-card benefit-card--span-6 tilt-card reveal-on-scroll reveal-delay-2">
+          <div class="benefit-card__img">
+            <img src="assets/img_15.png" alt="Design That Delivers" loading="lazy" />
+          </div>
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Design That Delivers</h3>
+            <p class="benefit-card__desc">Smart, strategic visuals built to grow your brand and move the needle.</p>
+          </div>
+        </div>
+
+        <!-- Row 2: 3 Cards -->
+        <div class="benefit-card benefit-card--span-4 tilt-card reveal-on-scroll reveal-delay-1">
+          <div class="benefit-card__img">
+            <img src="assets/img_17.png" alt="Adaptable and Flexible" loading="lazy" />
+          </div>
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Adaptable &amp; Flexible</h3>
+            <p class="benefit-card__desc">Tailored solutions for evolving market needs.</p>
+          </div>
+        </div>
+
+        <div class="benefit-card benefit-card--span-4 tilt-card reveal-on-scroll reveal-delay-2">
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Human-Centered Approach</h3>
+            <p class="benefit-card__desc">We craft brands that connect emotionally and authentically.</p>
+          </div>
+          <div class="benefit-card__img">
+            <img src="assets/img_20.png" alt="Human-Centered Approach" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="benefit-card benefit-card--span-4 tilt-card reveal-on-scroll reveal-delay-3">
+          <div class="benefit-card__img">
+            <img src="assets/img_22.png" alt="Global Vision, Local Focus" loading="lazy" />
+          </div>
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Global Vision, Local Focus</h3>
+            <p class="benefit-card__desc">Bringing global trends with a local understanding.</p>
+          </div>
+        </div>
+
+        <!-- Row 3: 2 Cards -->
+        <div class="benefit-card benefit-card--span-6 tilt-card reveal-on-scroll reveal-delay-1">
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Ideas You Didn’t See Coming</h3>
+            <p class="benefit-card__desc">Our team comes up with out-of-the-box ideas to make your brand stand out.</p>
+          </div>
+          <div class="benefit-card__img">
+            <img src="assets/img_24.png" alt="Ideas You Didn't See Coming" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="benefit-card benefit-card--span-6 tilt-card reveal-on-scroll reveal-delay-2">
+          <div class="benefit-card__img">
+            <img src="assets/detail_matters.jpg" alt="Every Detail Matters" loading="lazy" />
+          </div>
+          <div class="benefit-card__content">
+            <h3 class="benefit-card__title">Every Detail Matters</h3>
+            <p class="benefit-card__desc">Every element we design is intentional—measured, refined, and built to perform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PORTFOLIO & VIDEO SHOWCASE SECTION (#projects) ==================== -->
+  <section class="portfolio" id="projects">
+    <div class="scallop-divider scallop-divider--dark-to-cream"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-left">
+          <span>Featured Work</span>
+        </div>
+        <h2 class="section-heading">Look what we made!</h2>
+        <p class="section-subheading">A curated showcase of viral video reels, high-converting campaigns &amp; brand films for our flagship clients.</p>
+        
+        <!-- Brand Filter Tabs -->
+        <div class="brand-filter-tabs">
+          <button class="brand-tab active" data-brand="all">All Videos (7)</button>
+          <button class="brand-tab" data-brand="mg">MG Jewellers (4)</button>
+          <button class="brand-tab" data-brand="sofa">The Sofa Company (3)</button>
+        </div>
+      </div>
+
+      <!-- Video Reels Grid -->
+      <div class="video-reels-grid" id="videoReelsGrid">
+
+        <!-- MG Jewellers 1 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-1" data-brand="mg" data-type="video" data-title="MG Jewellers — Royal Heritage Collection" data-desc="Luxury gold &amp; diamond jewelry showcase campaign engineered to elevate brand positioning and drive high-intent showroom visits." data-video="assets/MG1.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG1.mp4#t=1.8" data-start-time="1.8" muted loop playsinline preload="auto"></video>
+
+            <span class="project-card__pill">MG Jewellers</span>
+            <span class="metric-badge">+320% ROI</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Royal Heritage Collection</h3>
+            <p class="project-card__desc">Cinematic jewelry reel with macro sparkle grading &amp; luxury aesthetic.</p>
+          </div>
+        </div>
+
+        <!-- MG Jewellers 2 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-2" data-brand="mg" data-type="video" data-title="MG Jewellers — Diamond Sparkle &amp; Craft" data-desc="High-impact Instagram reel highlighting intricate handcrafted jewelry details and certified diamond brilliance." data-video="assets/MG2.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG2.mp4" muted loop playsinline preload="metadata"></video>
+
+            <span class="project-card__pill">MG Jewellers</span>
+            <span class="metric-badge">1.4M Views</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Diamond Sparkle &amp; Craft</h3>
+            <p class="project-card__desc">Dynamic motion storytelling showcasing handcrafted fine jewelry.</p>
+          </div>
+        </div>
+
+        <!-- MG Jewellers 3 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-3" data-brand="mg" data-type="video" data-title="MG Jewellers — Luxury Bridal Showcase" data-desc="Bridal couture jewelry reel campaign driving showroom appointments and viral organic reach across Instagram &amp; Facebook." data-video="assets/MG3.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG3.mp4" muted loop playsinline preload="metadata"></video>
+
+            <span class="project-card__pill">MG Jewellers</span>
+            <span class="metric-badge">Bridal Hit</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Luxury Bridal Showcase</h3>
+            <p class="project-card__desc">Elegant bridal lookbook reel paired with viral trending audio curation.</p>
+          </div>
+        </div>
+
+        <!-- MG Jewellers 4 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-4" data-brand="mg" data-type="video" data-title="MG Jewellers — Elegance in Motion" data-desc="High-converting festive collection reel highlighting timeless gold artistry and contemporary styling." data-video="assets/MG4.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG4.mp4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
+
+            <span class="project-card__pill">MG Jewellers</span>
+            <span class="metric-badge">Viral Reel</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Elegance in Motion</h3>
+            <p class="project-card__desc">Fast-paced cuts and rhythmic sound design crafted for modern attention spans.</p>
+          </div>
+        </div>
+
+        <!-- The Sofa Company 1 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-1" data-brand="sofa" data-type="video" data-title="The Sofa Company — Living Room Comfort Edition" data-desc="Dynamic home makeover and premium sofa showcase reel driving 4.5x ROAS across Meta and digital ad channels." data-video="assets/TheSOFA.MP4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/TheSOFA.MP4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
+
+            <span class="project-card__pill">The Sofa Co.</span>
+            <span class="metric-badge">4.5x ROAS</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Living Room Comfort</h3>
+            <p class="project-card__desc">Lifestyle video reel highlighting modern ergonomics and premium fabric textures.</p>
+          </div>
+        </div>
+
+        <!-- The Sofa Company 2 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-2" data-brand="sofa" data-type="video" data-title="The Sofa Company — Premium Craftsmanship &amp; Fabric" data-desc="Behind-the-scenes and design spotlight reel showcasing durable materials, custom builds, and customer delight." data-video="assets/TheSOFA2.MP4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/TheSOFA2.MP4" muted loop playsinline preload="metadata"></video>
+
+            <span class="project-card__pill">The Sofa Co.</span>
+            <span class="metric-badge">+240% Sales</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Craft &amp; Fabric Spotlight</h3>
+            <p class="project-card__desc">Close-up texture and comfort demonstration that converted viewers into direct buyers.</p>
+          </div>
+        </div>
+
+        <!-- The Sofa Company 3 -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-3" data-brand="sofa" data-type="video" data-title="The Sofa Company — Modern Aesthetic Home Makeover" data-desc="Interior transformation reel demonstrating how customized sofas elevate living room aesthetics." data-video="assets/TheSOFA3.MP4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/TheSOFA3.MP4#t=2.0" data-start-time="2.0" muted loop playsinline preload="auto"></video>
+
+            <span class="project-card__pill">The Sofa Co.</span>
+            <span class="metric-badge">Viral Reach</span>
+          </div>
+          <div class="project-card__info">
+            <h3 class="project-card__name">Modern Home Makeover</h3>
+            <p class="project-card__desc">High-aesthetic room transformation video that generated hundreds of direct inquiries.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="portfolio-cta-wrap reveal-on-scroll">
+        <a href="portfolio.html" class="btn btn--yellow">View Full Portfolio Vault &amp; Case Studies →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROCESS SECTION (#process) ==================== -->
+  <section class="process" id="process">
+    <div class="scallop-divider scallop-divider--cream-to-dark"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-right">
+          <span>Process</span>
+        </div>
+        <h2 class="section-heading section-heading--white">Our not-so secret sauce</h2>
+      </div>
+
+      <div class="process-box reveal-on-scroll">
+        <!-- Tab Navigation Buttons (1, 2, 3, 4) -->
+        <div class="process-tabs" id="processTabs" role="tablist">
+          <button class="process-tab active" data-step="1" role="tab" aria-selected="true">1</button>
+          <button class="process-tab" data-step="2" role="tab" aria-selected="false">2</button>
+          <button class="process-tab" data-step="3" role="tab" aria-selected="false">3</button>
+          <button class="process-tab" data-step="4" role="tab" aria-selected="false">4</button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="process-pane active" id="processPane1">
+          <div class="process-pane__text">
+            <h3 class="process-pane__title">Listen First, Always</h3>
+            <p class="process-pane__desc">We start by understanding you — your story, goals, struggles, and audience. No cookie-cutter assumptions, just deep listening and strategic clarity.</p>
+          </div>
+          <div class="process-pane__visual">
+            <img src="assets/img_12.png" alt="Listen First, Always" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="process-pane" id="processPane2">
+          <div class="process-pane__text">
+            <h3 class="process-pane__title">Co-Create the Plann</h3>
+            <p class="process-pane__desc">You're part of the process — we brainstorm, plan, and build strategies together. You get full transparency with Figma files, drafts, and collaborative milestones.</p>
+          </div>
+          <div class="process-pane__visual">
+            <img src="assets/creative_sparks.jpg" alt="Co-Create the Plan" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="process-pane" id="processPane3">
+          <div class="process-pane__text">
+            <h3 class="process-pane__title">Create with Purpose</h3>
+            <p class="process-pane__desc">We make sure your content doesn't just look good — it actually sounds like you and makes people listen. Pixel perfection backed by conversion psychology.</p>
+          </div>
+          <div class="process-pane__visual">
+            <img src="assets/design_delivers.jpg" alt="Create with Purpose" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="process-pane" id="processPane4">
+          <div class="process-pane__text">
+            <h3 class="process-pane__title">Reflect, Refine, Repeat</h3>
+            <p class="process-pane__desc">We track results, ask questions, and improve things as we go — because real growth takes ongoing effort. Optimization is our constant companion.</p>
+          </div>
+          <div class="process-pane__visual">
+            <img src="assets/ideas_box.jpg" alt="Reflect, Refine, Repeat" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COMPARISON SECTION (#comparison) ==================== -->
+  <section class="comparison" id="comparison">
+    <div class="scallop-divider scallop-divider--dark-to-cream"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-left">
+          <span>Comparison</span>
+        </div>
+        <h2 class="section-heading">Built different (in a good way)</h2>
+      </div>
+
+      <div class="comparison-card reveal-on-scroll">
+        <!-- Left Side: Other Agencies -->
+        <div class="comparison-col comparison-col--other">
+          <h3 class="comparison-col__heading">Other Agencies</h3>
+          <ul class="comparison-list">
+            <li><span>Generic Solutions</span> <span class="emoji">😞</span></li>
+            <li><span>Hidden Costs</span> <span class="emoji">😒</span></li>
+            <li><span>Slow Turnarounds</span> <span class="emoji">😴</span></li>
+            <li><span>Rigid Contracts</span> <span class="emoji">😤</span></li>
+            <li><span>Boring Creativity</span> <span class="emoji">😐</span></li>
+            <li><span>One-Size-Fits-All</span> <span class="emoji">🥱</span></li>
+            <li><span>Endless Meetings</span> <span class="emoji">😵‍💫</span></li>
+            <li><span>Jargon-Filled Reports</span> <span class="emoji">🤯</span></li>
+            <li><span>Unresponsive Support</span> <span class="emoji">🫠</span></li>
+            <li><span>Vanishing Acts</span> <span class="emoji">👻</span></li>
+          </ul>
+        </div>
+
+        <!-- Serrated Dividing Line (Zigzag) -->
+        <div class="comparison-divider" aria-hidden="true"></div>
+
+        <!-- Right Side: Bend The Trend -->
+        <div class="comparison-col comparison-col--btt">
+          <h3 class="comparison-col__heading">Bend The Trend</h3>
+          <ul class="comparison-list">
+            <li><span>Personalized Plans</span> <span class="badge-icon">💬</span></li>
+            <li><span>Transparent Pricing</span> <span class="badge-icon">🏷️</span></li>
+            <li><span>Fast Turnarounds</span> <span class="badge-icon">⚡</span></li>
+            <li><span>Flexible Retainers</span> <span class="badge-icon">🤝</span></li>
+            <li><span>Bold Ideas</span> <span class="badge-icon">💡</span></li>
+            <li><span>Tailored Strategies</span> <span class="badge-icon">🎯</span></li>
+            <li><span>Actionable Strategy</span> <span class="badge-icon">📋</span></li>
+            <li><span>Clear, Honest Results</span> <span class="badge-icon">📊</span></li>
+            <li><span>Dedicated Support</span> <span class="badge-icon">🤝</span></li>
+            <li><span>Long-Term Partnership</span> <span class="badge-icon">🚀</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PRICING SECTION (#pricing) ==================== -->
+  <section class="pricing" id="pricing">
+    <div class="scallop-divider scallop-divider--cream-to-dark"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-right">
+          <span>Pricing</span>
+        </div>
+        <h2 class="section-heading section-heading--white">Pick your flavor</h2>
+      </div>
+
+      <div class="pricing-card reveal-on-scroll">
+        <div class="pricing-card__badge">Bespoke Packages</div>
+        <h3 class="pricing-card__title">Your brand is unique. Your pricing should be too.</h3>
+        <p class="pricing-card__desc">We don't believe in one-size-fits-all packages. At Bend the Trend, we design personalized solutions that fit your vision, goals, and budget. Let's discuss your project and create a custom package tailored specifically for your brand.</p>
+        <a href="#contact" class="btn btn--yellow">Get a Custom Quote →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT / TEAM SECTION (#about) ==================== -->
+  <section class="team" id="about">
+    <div class="scallop-divider scallop-divider--dark-to-cream"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-left">
+          <span>About</span>
+        </div>
+        <h2 class="section-heading">Our Story? It's Still Being Written.</h2>
+      </div>
+
+      <div class="team-grid">
+        <!-- Member 1 -->
+        <div class="team-card tilt-card reveal-on-scroll reveal-delay-1">
+          <div class="team-card__avatar-frame team-card__avatar-frame--clover">
+            <img src="assets/img_27.jpg" alt="Bhavishya Vyas" loading="lazy" />
+          </div>
+          <h3 class="team-card__name">Bhavishya Vyas</h3>
+          <p class="team-card__role">CEO, Creative Director</p>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="team-card tilt-card reveal-on-scroll reveal-delay-2">
+          <div class="team-card__avatar-frame team-card__avatar-frame--gear">
+            <img src="assets/img_30.jpg" alt="Pragati Nimade" loading="lazy" />
+          </div>
+          <h3 class="team-card__name">Pragati Nimade</h3>
+          <p class="team-card__role">Designer / Art Director</p>
+        </div>
+
+        <!-- Member 3: Hiring Card -->
+        <div class="team-card team-card--hiring tilt-card reveal-on-scroll reveal-delay-3">
+          <div class="team-card__hiring-box">
+            <span class="hiring-icon">✦</span>
+          </div>
+          <h3 class="team-card__name">Maybe You</h3>
+          <p class="team-card__role">Sr. Graphic Designer</p>
+          <p class="team-card__hiring-note">Cause we are hiring!</p>
+          <a href="#contact" class="btn btn--outline-dark">Join our team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ SECTION (#faqs) ==================== -->
+  <section class="faqs" id="faqs">
+    <div class="scallop-divider scallop-divider--cream-to-dark"></div>
+
+    <div class="container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-right">
+          <span>FAQs</span>
+        </div>
+        <h2 class="section-heading section-heading--white">You ask, we answer.</h2>
+      </div>
+
+      <div class="faqs-accordion reveal-on-scroll" id="faqsAccordion">
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">What services do you offer?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>We specialize in branding, web design, content creation, social media management, and creative strategy to help your brand stand out and lead trends.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">How long does a typical project take?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>It depends on the scope! A simple logo design might take a week, while a full brand overhaul or website build can take 3 to 6 weeks. We'll give you a clear timeline upfront and keep you updated throughout.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">How do you ensure the work matches my vision?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>We kick off every project with a discovery session to understand your brand and goals. Then, we keep you in the loop with mood boards, drafts, and plenty of collaborative checkpoints to give feedback.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">Do you offer revisions?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>Yes! We include a set number of structured revisions with each project milestone to make sure you're thrilled with the final result.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">Can you work with my existing brand guidelines?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>Absolutely. We respect your brand's identity and make sure our designs complement and elevate your existing aesthetic without losing continuity.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">What’s the payment structure like?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>We typically ask for a 50% deposit to start, with the remainder due upon project completion. We'll discuss all the details before we kick things off, so there are never any surprises.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-item__header">
+            <span class="faq-item__q">Do you offer ongoing support after the project is completed?</span>
+            <span class="faq-item__icon">+</span>
+          </button>
+          <div class="faq-item__content">
+            <p>Yes! We offer monthly maintenance packages for websites and ongoing content creation retainers to keep your brand looking fresh and fabulous.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECOND TICKER BAND (DARK) ==================== -->
+  <div class="ticker-band ticker-band--dark ticker-band--reverse" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Seen <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Heard <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Remembered <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Seen <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Heard <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Remembered <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Seen <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Heard <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Remembered <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Seen <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Heard <span class="ticker-dot">✦</span></span>
+      <span class="ticker-item">Remembered <span class="ticker-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- ==================== CONTACT SECTION (#contact) ==================== -->
+  <section class="contact" id="contact">
+    <div class="scallop-divider scallop-divider--dark-to-cream"></div>
+
+    <div class="container contact__container">
+      <div class="section-title-wrap reveal-on-scroll">
+        <div class="tag-badge tag-badge--yellow tag-badge--rot-left">
+          <span>Contact</span>
+        </div>
+        <h2 class="section-heading">Need a custom quote?</h2>
+      </div>
+
+      <div class="contact-card reveal-on-scroll">
+        <div class="contact-card__visual">
+          <img src="assets/img_37.png" alt="Let's Go!" loading="lazy" />
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <input type="text" id="contactName" name="name" class="form-input" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" id="contactEmail" name="email" class="form-input" placeholder="Your Email" required />
+          </div>
+          <div class="form-group">
+            <input type="tel" id="contactPhone" name="phone" class="form-input" placeholder="Phone Number" />
+          </div>
+          <div class="form-group">
+            <textarea id="contactMsg" name="message" class="form-textarea" placeholder="Tell us about your project..." rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--dark btn--full" id="submitBtn">Submit Message</button>
+          <div class="form-success" id="formSuccess" hidden>
+            <span>✓</span> Thank you! We received your message and will reply shortly.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FLOATING BACK TO TOP ==================== -->
+  <a href="#hero" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
+
+  <!-- ==================== CUSTOM CURSOR ==================== -->
+  <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="scallop-divider scallop-divider--cream-to-dark"></div>
+
+    <div class="container footer__container">
+      <div class="footer__brand-col">
+        <a href="#hero" class="logo logo--white" aria-label="Bend The Trend Home">
+          <span class="logo__brand">Bend</span>
+          <span class="logo__sub">— THE —</span>
+          <span class="logo__brand">Trend</span>
+        </a>
+        <div class="footer__contact-info">
+          <p><strong>PHONE:</strong> <a href="tel:+918269149313">+91 8269149313</a></p>
+          <p><strong>Email:</strong> <a href="mailto:bendthetrend0328@gmail.com">bendthetrend0328@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="footer__links-col">
+        <h4 class="footer__heading">Navigation</h4>
+        <ul class="footer__nav-list">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#benefits">Benefits</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__socials-col">
+        <h4 class="footer__heading">Follow Us</h4>
+        <div class="footer__social-links">
+          <a href="https://www.linkedin.com/company/bendthetrendofficial/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://www.instagram.com/bend.thetrend03?igsh=MWY1NTh3YTQ2Z2xzaA==" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© 2025 Bend The Trend. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== LIGHTBOX / VIDEO MODAL ==================== -->
+  <div class="lightbox-modal" id="portfolioModal" aria-hidden="true">
+    <div class="lightbox-modal__overlay" id="modalOverlay"></div>
+    <div class="lightbox-modal__content">
+      <button class="lightbox-modal__close" id="modalClose" aria-label="Close modal">✕</button>
+      <div class="lightbox-modal__media" id="modalMedia">
+        <!-- Video injected via JS -->
+      </div>
+      <div class="lightbox-modal__details">
+        <h3 id="modalTitle" class="lightbox-modal__title">Project Title</h3>
+        <p id="modalDesc" class="lightbox-modal__desc">Project Description</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

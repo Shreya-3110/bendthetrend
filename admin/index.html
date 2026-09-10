@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMS Dashboard | Bend The Trend</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/admin/admin.css" />
+  <link rel="icon" href="/assets/img_1.png" />
+</head>
+<body>
+
+  <!-- ==================== TOP NAVIGATION BAR ==================== -->
+  <header class="admin-header">
+    <div class="admin-header__container">
+      <div class="admin-header__brand">
+        <a href="/admin" class="admin-logo">
+          <span class="admin-logo__badge">BTT</span>
+          <span class="admin-logo__text">Portfolio <strong>CMS</strong></span>
+        </a>
+      </div>
+
+      <div class="admin-header__actions" id="headerActions" style="display: none;">
+        <a href="/portfolio.html" target="_blank" class="btn btn--subtle">
+          <span>View Live Site</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        <div class="user-pill">
+          <span class="user-pill__dot"></span>
+          <span class="user-pill__email" id="userEmailDisplay">admin@bendthetrend.com</span>
+        </div>
+        <button id="logoutBtn" class="btn btn--danger-outline btn--sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== AUTH / LOGIN VIEW ==================== -->
+  <main class="admin-main">
+    <section class="auth-section" id="authSection">
+      <div class="auth-card">
+        <div class="auth-card__header">
+          <div class="auth-card__icon">✦</div>
+          <h1 class="auth-card__title">Admin Sign In</h1>
+          <p class="auth-card__subtitle">Enter your agency credentials to manage portfolio projects</p>
+        </div>
+
+        <div class="alert alert--info" id="configAlert" style="display: none;">
+          <strong>Notice:</strong> Supabase keys are not set in <code>.env</code>. You can set them in Supabase or configure them in your environment variables.
+        </div>
+
+        <form id="loginForm" class="auth-form">
+          <div class="form-field">
+            <label for="loginEmail" class="form-label">Email Address</label>
+            <input type="email" id="loginEmail" class="form-input" placeholder="admin@bendthetrend.com" required autocomplete="email" />
+          </div>
+
+          <div class="form-field">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••••••" required autocomplete="current-password" />
+          </div>
+
+          <div class="form-alert form-alert--error" id="loginError" style="display: none;"></div>
+
+          <button type="submit" id="loginSubmitBtn" class="btn btn--primary btn--block">
+            <span class="btn__text">Sign In to Dashboard</span>
+            <span class="btn__spinner" style="display: none;"></span>
+          </button>
+        </form>
+
+        <div class="auth-card__footer">
+          <p>Protected area for authorized Bend the Trend team members.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DASHBOARD VIEW ==================== -->
+    <section class="dashboard-section" id="dashboardSection" style="display: none;">
+      <div class="dashboard-container">
+        
+        <!-- Dashboard Stats Overview -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__label">Total Projects</div>
+            <div class="stat-card__value" id="statTotal">0</div>
+          </div>
+          <div class="stat-card stat-card--success">
+            <div class="stat-card__label">Published Live</div>
+            <div class="stat-card__value" id="statPublished">0</div>
+          </div>
+          <div class="stat-card stat-card--warning">
+            <div class="stat-card__label">Drafts</div>
+            <div class="stat-card__value" id="statDrafts">0</div>
+          </div>
+          <div class="stat-card stat-card--purple">
+            <div class="stat-card__label">Categories</div>
+            <div class="stat-card__value" id="statCategories">5</div>
+          </div>
+        </div>
+
+        <!-- Controls / Filter / Actions Toolbar -->
+        <div class="toolbar">
+          <div class="toolbar__left">
+            <div class="search-box">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="searchInput" class="search-input" placeholder="Search by title, client, or tag..." />
+            </div>
+            
+            <select id="categoryFilter" class="select-filter">
+              <option value="all">All Categories</option>
+              <option value="video">Reels & Video</option>
+              <option value="branding">Branding & Web</option>
+              <option value="social">Social Campaigns</option>
+              <option value="ads">Performance Ads</option>
+              <option value="healthcare">Healthcare & Dental</option>
+            </select>
+
+            <select id="statusFilter" class="select-filter">
+              <option value="all">All Statuses</option>
+              <option value="published">Published Only</option>
+              <option value="draft">Drafts Only</option>
+            </select>
+          </div>
+
+          <div class="toolbar__right">
+            <button id="addProjectBtn" class="btn btn--primary">
+              <span class="btn__icon">+</span>
+              <span>Add New Project</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="table-container">
+          <table class="projects-table">
+            <thead>
+              <tr>
+                <th width="70">Order</th>
+                <th width="90">Media</th>
+                <th>Project / Client</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Metric Badge</th>
+                <th width="100">Featured</th>
+                <th width="120">Status</th>
+                <th width="120" style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody">
+              <!-- Dynamically populated via admin.js -->
+            </tbody>
+          </table>
+
+          <!-- Empty State -->
+          <div class="table-empty" id="tableEmpty" style="display: none;">
+            <div class="table-empty__icon">📁</div>
+            <h3>No projects found</h3>
+            <p>Try clearing your filters or create your first portfolio project.</p>
+            <button class="btn btn--primary btn--sm" id="emptyAddBtn">+ Add Project</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== ADD / EDIT PROJECT MODAL ==================== -->
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal__dialog modal__dialog--lg">
+      <div class="modal__header">
+        <h2 class="modal__title" id="modalTitle">Add New Project</h2>
+        <button class="modal__close" id="modalCloseBtn" aria-label="Close modal">✕</button>
+      </div>
+
+      <form id="projectForm" class="modal__body">
+        <input type="hidden" id="projectId" />
+
+        <div class="form-grid">
+          <!-- Title -->
+          <div class="form-field form-field--span-6">
+            <label for="projectTitle" class="form-label">Project Title <span class="required">*</span></label>
+            <input type="text" id="projectTitle" class="form-input" placeholder="e.g. Royal Heritage Collection" required />
+          </div>
+
+          <!-- Client -->
+          <div class="form-field form-field--span-6">
+            <label for="projectClient" class="form-label">Client Name <span class="required">*</span></label>
+            <input type="text" id="projectClient" class="form-input" placeholder="e.g. MG Jewellers" required />
+          </div>
+
+          <!-- Category -->
+          <div class="form-field form-field--span-6">
+            <label for="projectCategory" class="form-label">Category <span class="required">*</span></label>
+            <select id="projectCategory" class="form-select" required>
+              <option value="video">Reels & Video</option>
+              <option value="branding">Branding & Web</option>
+              <option value="social">Social Campaigns</option>
+              <option value="ads">Performance Ads</option>
+              <option value="healthcare">Healthcare & Dental</option>
+            </select>
+          </div>
+
+          <!-- Category Display Label -->
+          <div class="form-field form-field--span-6">
+            <label for="projectCategoryLabel" class="form-label">Category Tag / Pill Label</label>
+            <input type="text" id="projectCategoryLabel" class="form-input" placeholder="e.g. Jewelry & Luxury (defaults to category)" />
+          </div>
+
+          <!-- Performance Metric Badge -->
+          <div class="form-field form-field--span-6">
+            <label for="projectBadge" class="form-label">Performance / Result Badge</label>
+            <input type="text" id="projectBadge" class="form-input" placeholder="e.g. +320% ROI, 1.4M Views, 4.5x ROAS" />
+          </div>
+
+          <!-- Sort Order -->
+          <div class="form-field form-field--span-6">
+            <label for="projectSortOrder" class="form-label">Display Order (Lower = First)</label>
+            <input type="number" id="projectSortOrder" class="form-input" value="1" min="1" />
+          </div>
+
+          <!-- Media Type -->
+          <div class="form-field form-field--span-12">
+            <label class="form-label">Media Type <span class="required">*</span></label>
+            <div class="radio-cards">
+              <label class="radio-card">
+                <input type="radio" name="mediaType" value="video" id="mediaTypeVideo" checked />
+                <div class="radio-card__box">
+                  <span class="radio-card__icon">🎬</span>
+                  <span class="radio-card__title">Video Reel</span>
+                  <span class="radio-card__sub">Plays in video lightbox</span>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="mediaType" value="gallery" id="mediaTypeGallery" />
+                <div class="radio-card__box">
+                  <span class="radio-card__icon">🖼️</span>
+                  <span class="radio-card__title">Multi-Image Gallery</span>
+                  <span class="radio-card__sub">Opens slide carousel</span>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="mediaType" value="image" id="mediaTypeImage" />
+                <div class="radio-card__box">
+                  <span class="radio-card__icon">📷</span>
+                  <span class="radio-card__title">Single Image</span>
+                  <span class="radio-card__sub">Standard case visual</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Thumbnail Cover Upload -->
+          <div class="form-field form-field--span-12">
+            <label class="form-label">Cover / Thumbnail Image</label>
+            <div class="upload-box" id="thumbnailUploadBox">
+              <input type="file" id="thumbnailFileInput" accept="image/*" class="upload-box__input" />
+              <div class="upload-box__content" id="thumbnailPlaceholder">
+                <span class="upload-box__icon">📤</span>
+                <span class="upload-box__text">Click or drag & drop to upload Cover Image</span>
+                <span class="upload-box__sub">JPG, PNG, WEBP up to 5MB</span>
+              </div>
+              <div class="upload-preview" id="thumbnailPreviewWrap" style="display: none;">
+                <img id="thumbnailPreviewImg" src="" alt="Thumbnail Preview" />
+                <button type="button" class="upload-preview__remove" id="removeThumbnailBtn" title="Remove image">✕</button>
+              </div>
+            </div>
+            <div class="form-field__alt">
+              <span>or direct URL:</span>
+              <input type="text" id="projectThumbnailUrl" class="form-input form-input--sm" placeholder="https://... or assets/filename.jpg" />
+            </div>
+          </div>
+
+          <!-- Video Upload / URL (Conditional for Video) -->
+          <div class="form-field form-field--span-12" id="videoFieldGroup">
+            <label class="form-label">Video Reel File / URL</label>
+            <div class="upload-box" id="videoUploadBox">
+              <input type="file" id="videoFileInput" accept="video/mp4,video/webm" class="upload-box__input" />
+              <div class="upload-box__content" id="videoPlaceholder">
+                <span class="upload-box__icon">🎥</span>
+                <span class="upload-box__text">Click or drag & drop to upload MP4 Video</span>
+                <span class="upload-box__sub">MP4, WEBM (Under 25MB recommended)</span>
+              </div>
+              <div class="upload-preview" id="videoPreviewWrap" style="display: none;">
+                <video id="videoPreviewEl" src="" controls style="max-height: 160px;"></video>
+                <button type="button" class="upload-preview__remove" id="removeVideoBtn" title="Remove video">✕</button>
+              </div>
+            </div>
+            <div class="form-field__alt">
+              <span>or direct Video URL:</span>
+              <input type="text" id="projectVideoUrl" class="form-input form-input--sm" placeholder="assets/MG1.mp4 or https://cdn.example.com/video.mp4" />
+            </div>
+          </div>
+
+          <!-- Gallery Images (Conditional for Gallery) -->
+          <div class="form-field form-field--span-12" id="galleryFieldGroup" style="display: none;">
+            <label class="form-label">Gallery Slides (Carousel)</label>
+            <div class="upload-box">
+              <input type="file" id="galleryFileInput" accept="image/*" multiple class="upload-box__input" />
+              <div class="upload-box__content">
+                <span class="upload-box__icon">📸</span>
+                <span class="upload-box__text">Upload Multiple Gallery Images</span>
+                <span class="upload-box__sub">Select 1 or more images to appear in the carousel</span>
+              </div>
+            </div>
+            <div class="gallery-preview-strip" id="galleryPreviewStrip">
+              <!-- Injected via JS -->
+            </div>
+            <div class="form-field__alt">
+              <span>or comma-separated URLs:</span>
+              <input type="text" id="projectGalleryUrls" class="form-input form-input--sm" placeholder="url1.jpg, url2.jpg, url3.jpg" />
+            </div>
+          </div>
+
+          <!-- Short Description -->
+          <div class="form-field form-field--span-12">
+            <label for="projectDesc" class="form-label">Short Description (Card Summary) <span class="required">*</span></label>
+            <textarea id="projectDesc" class="form-textarea" rows="2" placeholder="Brief 1-2 sentence pitch highlighting the core achievement or positioning." required></textarea>
+          </div>
+
+          <!-- Detailed Description (Optional) -->
+          <div class="form-field form-field--span-12">
+            <label for="projectDetailedDesc" class="form-label">Detailed Description / Case Notes (Optional)</label>
+            <textarea id="projectDetailedDesc" class="form-textarea" rows="3" placeholder="Expanded case study notes displayed inside the modal lightbox."></textarea>
+          </div>
+
+          <!-- Toggles: Published & Featured -->
+          <div class="form-field form-field--span-6">
+            <label class="toggle-control">
+              <input type="checkbox" id="projectPublished" checked />
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">Published Live on Portfolio</span>
+            </label>
+          </div>
+
+          <div class="form-field form-field--span-6">
+            <label class="toggle-control">
+              <input type="checkbox" id="projectFeatured" />
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">Featured in Agency Showcase</span>
+            </label>
+          </div>
+
+        </div>
+
+        <div class="modal__alert" id="modalAlert" style="display: none;"></div>
+
+        <div class="modal__footer">
+          <button type="button" class="btn btn--subtle" id="modalCancelBtn">Cancel</button>
+          <button type="submit" class="btn btn--primary" id="saveProjectBtn">
+            <span class="btn__text">Save Project</span>
+            <span class="btn__spinner" style="display: none;"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== DELETE CONFIRMATION MODAL ==================== -->
+  <div class="modal" id="deleteModal" aria-hidden="true">
+    <div class="modal__backdrop" id="deleteModalBackdrop"></div>
+    <div class="modal__dialog modal__dialog--sm">
+      <div class="modal__header">
+        <h2 class="modal__title">Confirm Deletion</h2>
+        <button class="modal__close" id="deleteModalCloseBtn">✕</button>
+      </div>
+      <div class="modal__body">
+        <p>Are you sure you want to permanently delete <strong id="deleteProjectTitle">this project</strong>?</p>
+        <p class="modal__warning-text">This will remove the project from the live portfolio and clean up associated storage media. This action cannot be undone.</p>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--subtle" id="deleteCancelBtn">Keep Project</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn">
+          <span class="btn__text">Delete Permanently</span>
+          <span class="btn__spinner" style="display: none;"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="adminToast" role="alert"></div>
+
+  <script type="module" src="/admin/admin.js"></script>
+</body>
+</html>
