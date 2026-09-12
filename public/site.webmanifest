@@ -1,0 +1,22 @@
+{
+  "name": "Bend The Trend Digital Marketing Agency",
+  "short_name": "Bend The Trend",
+  "description": "Your brand deserves to be Seen, Heard, and Remembered. Creative strategy, branding, web design, and video production.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#FED130",
+  "icons": [
+    {
+      "src": "assets/img_1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img_1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "marketing", "design", "advertising"]
+}
