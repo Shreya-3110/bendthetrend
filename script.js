@@ -6,54 +6,39 @@ import { supabase, isSupabaseConfigured, SEED_PROJECTS } from './supabaseClient.
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ==================== 1. CUSTOM CURSOR (YELLOW CIRCLE) ====================
-  const cur = document.getElementById('customCursor');
+  // ==================== 1. CURSOR (STANDARD NATURAL SYSTEM CURSOR) ====================
+  window.attachCursorHover = () => {};
 
-  if (cur) {
-    const updateCursorPos = (x, y) => {
-      cur.style.setProperty('--cx', x + 'px');
-      cur.style.setProperty('--cy', y + 'px');
-      cur.classList.add('visible');
-    };
+  // ==================== 2. INTERSECTION OBSERVER (ALL ELEMENT SCROLL REVEALS) ====================
+  // Automatically tag elements across the site to reveal with fluid staggers
+  const autoRevealSelectors = [
+    '.section-title-wrap',
+    '.quick-card',
+    '.service-row',
+    '.service-card',
+    '.benefit-card',
+    '.portfolio-item',
+    '.process-tab',
+    '.process-pane',
+    '.process-box',
+    '.comparison-card',
+    '.comparison-card-wrapper',
+    '.pricing-card',
+    '.team-card',
+    '.faq-item',
+    '.faq-convo-item',
+    '.quote-card',
+    '.footer-card'
+  ];
 
-    window.addEventListener('pointermove', (e) => {
-      updateCursorPos(e.clientX, e.clientY);
-    }, { passive: true });
+  document.querySelectorAll(autoRevealSelectors.join(',')).forEach((el, index) => {
+    if (!el.classList.contains('reveal-on-scroll')) {
+      el.classList.add('reveal-on-scroll');
+      const delayIndex = (index % 4) + 1;
+      el.classList.add(`reveal-delay-${delayIndex}`);
+    }
+  });
 
-    window.addEventListener('mousemove', (e) => {
-      updateCursorPos(e.clientX, e.clientY);
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches.length > 0) {
-        updateCursorPos(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches.length > 0) {
-        updateCursorPos(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    // Grow cursor on hover over interactive elements
-    const attachCursorHover = (container = document) => {
-      const targets = container.querySelectorAll(
-        'a, button, input, textarea, .service-row__header, .faq-item__header, .tilt-card, .process-tab, .quick-card, .sticker, .filter-btn, .brand-tab'
-      );
-      targets.forEach(el => {
-        if (!el.__cursorBound) {
-          el.__cursorBound = true;
-          el.addEventListener('mouseenter', () => cur.classList.add('big'));
-          el.addEventListener('mouseleave', () => cur.classList.remove('big'));
-        }
-      });
-    };
-    attachCursorHover();
-    window.attachCursorHover = attachCursorHover;
-  }
-
-  // ==================== 2. INTERSECTION OBSERVER (SCROLL REVEALS) ====================
   const revealElements = document.querySelectorAll('.reveal-on-scroll');
 
   const revealObserver = new IntersectionObserver(
@@ -66,8 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
     {
-      threshold: 0.1,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.08,
+      rootMargin: '0px 0px -30px 0px'
     }
   );
 
@@ -79,13 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
-  // ==================== 3. 3D MAGNETIC CARD TILT ====================
+  // ==================== 3. 3D MAGNETIC CARD TILT & HIGHLIGHT ====================
   function initTiltCards(container = document) {
-    const tiltCards = container.querySelectorAll('.tilt-card');
+    const tiltCards = container.querySelectorAll('.tilt-card, .quick-card, .team-card, .project-card');
 
     tiltCards.forEach((card) => {
       if (card.__hasTilt) return;
       card.__hasTilt = true;
+
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'none';
+      });
 
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -95,20 +84,63 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const rotateX = ((y - centerY) / centerY) * -6; // max 6deg
-        const rotateY = ((x - centerX) / centerX) * 6;  // max 6deg
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
       });
 
       card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1)';
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
       });
+    });
+
+    // Auto-play videos on hover for portfolio cards
+    const reelCards = container.querySelectorAll('.reel-card');
+    reelCards.forEach(card => {
+      if (card.__hasVideoHover) return;
+      card.__hasVideoHover = true;
+      const video = card.querySelector('.reel-card__video');
+      if (video) {
+        card.addEventListener('mouseenter', () => {
+          video.play().catch(() => {});
+        });
+        card.addEventListener('mouseleave', () => {
+          video.pause();
+        });
+      }
     });
   }
   initTiltCards();
 
-  // ==================== 4. HERO PARALLAX STICKER BADGES ====================
+  // ==================== 4. MAGNETIC BUTTON ATTRACTION ====================
+  const magneticButtons = document.querySelectorAll('.btn, .menu-btn, .quote-form__submit, .back-to-top');
+  magneticButtons.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // ==================== 5. STICKY HEADER BLUR ON SCROLL ====================
+  const siteHeader = document.querySelector('.header');
+  if (siteHeader) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 25) {
+        siteHeader.classList.add('header--scrolled');
+      } else {
+        siteHeader.classList.remove('header--scrolled');
+      }
+    }, { passive: true });
+  }
+
+  // ==================== 6. HERO PARALLAX STICKER BADGES ====================
   const heroSection = document.getElementById('hero');
   const stickerTimeless = document.querySelector('.sticker--timeless');
   const stickerEdgy = document.querySelector('.sticker--edgy');
@@ -174,29 +206,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==================== 6. SERVICES ACCORDION ====================
-  const serviceRows = document.querySelectorAll('.service-row');
+  const serviceCards = document.querySelectorAll('.service-card, .service-row');
 
-  serviceRows.forEach(row => {
-    const header = row.querySelector('.service-row__header');
-    const toggleIcon = row.querySelector('.icon-toggle');
+  serviceCards.forEach(card => {
+    const header = card.querySelector('.service-card__header, .service-row__header');
+    const toggleIcon = card.querySelector('.service-card__toggle, .icon-toggle');
 
     if (header) {
       header.addEventListener('click', () => {
-        const isActive = row.classList.contains('active');
+        const isActive = card.classList.contains('active');
 
-        serviceRows.forEach(otherRow => {
-          if (otherRow !== row) {
-            otherRow.classList.remove('active');
-            const otherIcon = otherRow.querySelector('.icon-toggle');
+        serviceCards.forEach(otherCard => {
+          if (otherCard !== card) {
+            otherCard.classList.remove('active');
+            const otherIcon = otherCard.querySelector('.service-card__toggle, .icon-toggle');
             if (otherIcon) otherIcon.textContent = '+';
           }
         });
 
         if (isActive) {
-          row.classList.remove('active');
+          card.classList.remove('active');
           if (toggleIcon) toggleIcon.textContent = '+';
         } else {
-          row.classList.add('active');
+          card.classList.add('active');
           if (toggleIcon) toggleIcon.textContent = '−';
         }
       });
@@ -205,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ==================== 7. PROCESS TABS SWITCHER ====================
   const processTabs = document.querySelectorAll('.process-tab');
-  const processPanes = document.querySelectorAll('.process-pane');
+  const processPanes = document.querySelectorAll('.process-pane, .process-text-pane, .process-visual-pane');
 
   processTabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -222,15 +254,18 @@ document.addEventListener('DOMContentLoaded', () => {
         pane.classList.remove('active');
       });
 
-      const activePane = document.getElementById(`processPane${step}`);
-      if (activePane) {
-        activePane.classList.add('active');
-      }
+      const activeTextPane = document.getElementById(`processText${step}`);
+      const activeVisualPane = document.getElementById(`processVisual${step}`);
+      const legacyPane = document.getElementById(`processPane${step}`);
+
+      if (activeTextPane) activeTextPane.classList.add('active');
+      if (activeVisualPane) activeVisualPane.classList.add('active');
+      if (legacyPane) legacyPane.classList.add('active');
     });
   });
 
   // ==================== 8. FAQS ACCORDION ====================
-  const faqItems = document.querySelectorAll('.faq-item');
+  const faqItems = document.querySelectorAll('.faq-convo-item, .faq-item');
 
   faqItems.forEach(item => {
     const header = item.querySelector('.faq-item__header');
@@ -242,10 +277,17 @@ document.addEventListener('DOMContentLoaded', () => {
         faqItems.forEach(otherItem => {
           if (otherItem !== item) {
             otherItem.classList.remove('active');
+            const otherArrow = otherItem.querySelector('.faq-item__arrow');
+            if (otherArrow) otherArrow.textContent = '▼';
           }
         });
 
-        item.classList.toggle('active', !isActive);
+        const nowActive = !isActive;
+        item.classList.toggle('active', nowActive);
+        const arrow = item.querySelector('.faq-item__arrow');
+        if (arrow) {
+          arrow.textContent = nowActive ? '▲' : '▼';
+        }
       });
     }
   });

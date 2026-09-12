@@ -26,7 +26,12 @@ pnpm-debug.log*
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
 .DS_Store
 Thumbs.db
+
+# Scratch & temp files
+scratch/
+.tempmediaStorage/
+
+
