@@ -1753,15 +1753,16 @@ button {
   overflow: hidden;
 }
 
-/* Downward Yellow Scallop Divider */
+/* Upward Yellow Awning Scallops into Black */
 .scallop-divider--yellow-down {
   background-color: #0b0b0b;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 30' width='48' height='30'%3E%3Cpath d='M 0 0 C 12 30, 36 30, 48 0 Z' fill='%23FED130'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 30' width='48' height='30'%3E%3Cpath d='M 0 30 A 24 24 0 0 1 48 30 Z' fill='%23FED130'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: 48px 30px;
-  background-position: top;
+  background-position: bottom;
   height: 30px;
   width: 100%;
+  margin-bottom: -1px;
 }
 
 /* Yellow Halftone Dot Pattern Wrapper */
@@ -1770,7 +1771,7 @@ button {
   background-color: #FED130;
   background-image: radial-gradient(#121212 1.8px, transparent 1.8px);
   background-size: 14px 14px;
-  padding: 48px 0 64px;
+  padding: 36px 0 60px;
   position: relative;
 }
 
@@ -1778,10 +1779,10 @@ button {
 .quote-card {
   background-color: #FFFFFF;
   border-radius: 40px;
-  padding: 56px 64px 48px 64px;
+  padding: 52px 64px 44px 64px;
   display: grid;
   grid-template-columns: 1fr 1.15fr;
-  gap: 64px;
+  gap: 60px;
   align-items: center;
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
 }
@@ -1795,9 +1796,9 @@ button {
 
 .quote-card__img {
   width: 100%;
-  max-width: 280px;
+  max-width: 270px;
   height: auto;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   object-fit: contain;
 }
 
@@ -1807,18 +1808,8 @@ button {
   font-weight: 900;
   letter-spacing: -0.5px;
   color: #121212;
-  margin-bottom: 8px;
+  margin: 0;
   line-height: 1.15;
-}
-
-.quote-card__subtitle {
-  font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.45;
-  color: #121212;
-  max-width: 330px;
-  margin: 0 auto;
-  font-weight: 600;
 }
 
 /* ----------------- Quote Form ----------------- */
@@ -1834,7 +1825,7 @@ button {
 .quote-form__group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .quote-form__label {
@@ -1844,6 +1835,7 @@ button {
   letter-spacing: -0.5px;
   color: #121212;
   margin-bottom: 2px;
+  line-height: 1.2;
 }
 
 .quote-form__input,
@@ -1856,13 +1848,13 @@ button {
   font-family: var(--font-body);
   font-size: 16px;
   color: #121212;
-  padding: 4px 0 8px 0;
+  padding: 2px 0 6px 0;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .quote-form__textarea {
-  min-height: 54px;
+  min-height: 48px;
   resize: vertical;
 }
 
@@ -1873,8 +1865,8 @@ button {
 
 .quote-form__submit {
   width: 100%;
-  margin-top: 12px;
-  padding: 15px 28px;
+  margin-top: 10px;
+  padding: 14px 28px;
   background-color: #FED130;
   border: 2px solid #121212;
   border-radius: 9999px;
@@ -1905,7 +1897,7 @@ button {
   position: relative;
   background-color: #0b0b0b;
   width: 100%;
-  padding: 64px 0 0 0;
+  padding: 70px 0 70px 0;
   overflow: hidden;
 }
 
@@ -1917,7 +1909,7 @@ button {
 .footer-plus-left {
   position: absolute;
   top: 0;
-  bottom: 56px;
+  bottom: 0;
   left: 0;
   width: 56px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M7,2 L7,12 M2,7 L12,7' stroke='%23FED130' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
@@ -1926,70 +1918,42 @@ button {
 }
 
 .footer-plus-bottom {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 56px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M7,2 L7,12 M2,7 L12,7' stroke='%23FED130' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
   background-size: 14px 14px;
   pointer-events: none;
-  margin-top: 48px;
 }
 
 .footer-inner {
-  padding-left: 80px;
+  padding-left: 96px;
   padding-right: 24px;
+  padding-bottom: 40px;
 }
 
 .footer-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-}
-
-.footer-heading {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-  color: #FED130;
-  margin-bottom: 6px;
-}
-
-.footer-contact-group {
-  margin-bottom: 32px;
-}
-
-.footer-contact-group:last-child {
-  margin-bottom: 0;
-}
-
-.footer-contact-link {
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 600;
-  color: #FFFFFF;
-  text-decoration: none;
-  display: inline-block;
-  transition: color 0.2s ease;
-}
-
-.footer-contact-link:hover {
-  color: #FED130;
+  display: flex;
+  flex-direction: row;
+  gap: clamp(48px, 8vw, 120px);
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .footer-link-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   margin: 0;
   padding: 0;
 }
 
 .footer-link-list li a {
   font-family: var(--font-display);
-  font-size: clamp(34px, 4.2vw, 48px);
+  font-size: clamp(36px, 4.8vw, 54px);
   font-weight: 900;
   letter-spacing: -0.5px;
   line-height: 1.25;
@@ -1997,6 +1961,11 @@ button {
   text-decoration: none;
   display: inline-block;
   transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.footer-link-list li a:hover {
+  opacity: 0.82;
+  transform: translateX(6px);
 }
 
 .footer-link-list li a:hover {
