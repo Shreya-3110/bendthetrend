@@ -931,29 +931,29 @@ button {
 /* Yellow pill badge top-left */
 .project-card__pill {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 14px;
+  left: 14px;
   background-color: var(--accent-yellow);
   color: #121212;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.6px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  padding: 9px 20px;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  border: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  border: 1.5px solid var(--border-dark);
+  box-shadow: 2px 2px 0px var(--border-dark);
   z-index: 3;
 }
 
 /* Dark circular expand arrow button top-right */
 .project-card__expand-btn {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background-color: rgba(18, 18, 18, 0.85);
   backdrop-filter: blur(8px);
@@ -974,8 +974,8 @@ button {
 }
 
 .project-card__expand-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   stroke: #FFFFFF;
   stroke-width: 2.5;
   transition: transform 0.25s ease;
@@ -987,7 +987,7 @@ button {
 
 /* Bottom info card content */
 .project-card__info {
-  padding: 30px 32px 36px;
+  padding: 20px 22px 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -999,15 +999,15 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .project-card__tag {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   color: #555555;
   white-space: nowrap;
@@ -1021,7 +1021,7 @@ button {
 
 .project-card__index {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #888888;
   white-space: nowrap;
@@ -1030,23 +1030,23 @@ button {
 /* Card headline */
 .project-card__name {
   font-family: var(--font-heading);
-  font-size: clamp(28px, 2.4vw, 36px);
+  font-size: clamp(19px, 1.4vw, 23px);
   font-weight: 800;
   text-transform: none;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.4px;
   color: #121212;
-  line-height: 1.16;
-  margin: 0 0 14px 0;
+  line-height: 1.22;
+  margin: 0 0 8px 0;
 }
 
 /* Card description */
 .project-card__desc {
   font-family: var(--font-body);
-  font-size: 15.5px;
+  font-size: 14px;
   color: #555555;
-  line-height: 1.55;
+  line-height: 1.5;
   font-weight: 400;
-  margin: 0 0 26px 0;
+  margin: 0 0 16px 0;
   flex: 1;
 }
 
@@ -2489,10 +2489,6 @@ button {
     text-align: left;
   }
 
-  .portfolio-grid {
-    grid-template-columns: 1fr;
-  }
-
   .team-grid {
     grid-template-columns: 1fr;
   }
@@ -2713,15 +2709,57 @@ button {
   background-color: var(--bg-cream);
 }
 
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Card thumbnail and height containment */
+.project-card__thumb {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  max-height: 260px;
+  overflow: hidden;
+  background-color: #121212;
+}
+
+.project-card__thumb img,
+.project-card__thumb video,
+.project-card__thumb .reel-card__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
 .metric-badge {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: 14px;
+  right: 14px;
   background-color: var(--bg-dark);
   color: var(--accent-yellow);
   font-family: var(--font-heading);
-  font-size: 0.85rem;
-  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 5px 12px;
   border-radius: 20px;
   border: 2px solid var(--border-dark);
   box-shadow: 2px 2px 0px var(--border-dark);
