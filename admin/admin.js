@@ -42,6 +42,7 @@ const headerManageBrandsBtn = document.getElementById('headerManageBrandsBtn');
 
 // Project Modal elements
 const projectModal = document.getElementById('projectModal');
+const projectModalBackdrop = document.getElementById('projectModalBackdrop');
 const modalCloseBtn = document.getElementById('modalCloseBtn');
 const modalCancelBtn = document.getElementById('modalCancelBtn');
 const projectForm = document.getElementById('projectForm');
@@ -118,6 +119,7 @@ const brandInUseMsg = document.getElementById('brandInUseMsg');
 
 // Delete Project modal
 const deleteModal = document.getElementById('deleteModal');
+const deleteModalBackdrop = document.getElementById('deleteModalBackdrop');
 const deleteModalCloseBtn = document.getElementById('deleteModalCloseBtn');
 const deleteCancelBtn = document.getElementById('deleteCancelBtn');
 const deleteConfirmBtn = document.getElementById('deleteConfirmBtn');
@@ -542,6 +544,7 @@ async function loadProjects() {
     projectsList = stored ? JSON.parse(stored) : [...SEED_PROJECTS];
     // Reconcile missing brand_ids from client names
     reconcileProjectBrands();
+    projectsList.sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
     renderProjectsTable();
     updateStats();
     return;
@@ -566,6 +569,7 @@ async function loadProjects() {
 
     projectsList = projects || [];
     reconcileProjectBrands();
+    projectsList.sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
     renderProjectsTable();
     updateStats();
   } catch (err) {
@@ -573,6 +577,7 @@ async function loadProjects() {
     showToast('Falling back to local projects cache', 'error');
     projectsList = [...SEED_PROJECTS];
     reconcileProjectBrands();
+    projectsList.sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
     renderProjectsTable();
     updateStats();
   }
@@ -1007,12 +1012,13 @@ async function handleProjectSubmit(e) {
           };
         }
       } else {
-        projectsList.unshift({
+        projectsList.push({
           id,
           ...projectPayload,
           gallery: finalGalleryUrls.map((u, i) => ({ url: u, sort_order: i + 1 }))
         });
       }
+      projectsList.sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
       saveLocalProjects();
       closeModal();
       renderProjectsTable();
@@ -1169,6 +1175,7 @@ function initEventListeners() {
   emptyAddBtn.addEventListener('click', openAddModal);
   modalCloseBtn.addEventListener('click', closeModal);
   modalCancelBtn.addEventListener('click', closeModal);
+  if (projectModalBackdrop) projectModalBackdrop.addEventListener('click', closeModal);
   projectForm.addEventListener('submit', handleProjectSubmit);
 
   // Brand Modal actions
@@ -1190,6 +1197,7 @@ function initEventListeners() {
   // Delete Project modal actions
   deleteModalCloseBtn.addEventListener('click', closeDeleteModal);
   deleteCancelBtn.addEventListener('click', closeDeleteModal);
+  if (deleteModalBackdrop) deleteModalBackdrop.addEventListener('click', closeDeleteModal);
   deleteConfirmBtn.addEventListener('click', confirmDelete);
 
   // Media type switcher

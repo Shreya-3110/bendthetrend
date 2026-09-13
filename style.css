@@ -505,11 +505,11 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-size: clamp(40px, 6.5vw, 84px);
+  font-size: clamp(38px, 6vw, 80px);
   line-height: 1.0;
   letter-spacing: -1.2px;
   margin-bottom: 40px;
-  gap: clamp(44px, 5.5vw, 72px);
+  gap: clamp(65px, 8vw, 100px);
 }
 
 .section-heading--stacked span {
@@ -532,8 +532,8 @@ button {
 }
 
 .title-badge--starburst {
-  width: clamp(102px, 11vw, 128px);
-  height: clamp(102px, 11vw, 128px);
+  width: clamp(86px, 8.5vw, 108px);
+  height: clamp(86px, 8.5vw, 108px);
 }
 
 .title-badge--rot-left {
@@ -570,12 +570,16 @@ button {
   z-index: 10;
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: clamp(10.5px, 1.1vw, 12px);
+  font-size: clamp(8.5px, 0.85vw, 10.5px);
   text-transform: uppercase;
   color: #121212;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.2px;
   text-align: center;
   white-space: nowrap;
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ==================== QUICK FEATURES ==================== */
@@ -2546,20 +2550,20 @@ button {
   }
 
   .section-heading--stacked {
-    font-size: clamp(30px, 7.5vw, 44px);
+    font-size: clamp(26px, 6.8vw, 38px);
     line-height: 1.0;
-    gap: clamp(30px, 4.5vw, 42px);
+    gap: clamp(52px, 12vw, 72px);
     margin-bottom: 24px;
   }
 
   .title-badge--starburst {
-    width: 88px;
-    height: 88px;
+    width: 72px;
+    height: 72px;
   }
 
   .badge-text {
-    font-size: 9.5px;
-    letter-spacing: 0.3px;
+    font-size: 8px;
+    letter-spacing: 0.15px;
   }
 
   .quick-features__grid {

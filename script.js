@@ -302,13 +302,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==================== 9. FLOATING BACK TO TOP BUTTON ====================
   const backToTop = document.getElementById('backToTop');
 
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 450) {
-      backToTop.classList.add('is-visible');
-    } else {
-      backToTop.classList.remove('is-visible');
-    }
-  }, { passive: true });
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 450) {
+        backToTop.classList.add('is-visible');
+      } else {
+        backToTop.classList.remove('is-visible');
+      }
+    }, { passive: true });
+  }
 
   // ==================== 10. CONTACT FORM SUBMISSION ====================
   const contactForm = document.getElementById('contactForm');
