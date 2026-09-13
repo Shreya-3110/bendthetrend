@@ -532,16 +532,16 @@ button {
 }
 
 .title-badge--starburst {
-  width: clamp(96px, 9.5vw, 120px);
-  height: clamp(96px, 9.5vw, 120px);
+  width: clamp(102px, 10.5vw, 128px);
+  height: clamp(102px, 10.5vw, 128px);
 }
 
 .title-badge--rot-left {
-  transform: translate(-50%, -50%) rotate(-4deg);
+  transform: translate(-50%, -50%) rotate(-3deg);
 }
 
 .title-badge--rot-right {
-  transform: translate(-50%, -50%) rotate(4deg);
+  transform: translate(-50%, -50%) rotate(3deg);
 }
 
 .title-badge--pill {
@@ -550,13 +550,13 @@ button {
   border: 2.5px solid #121212;
   border-radius: var(--radius-pill);
   padding: 6px 22px;
-  font-family: var(--font-heading);
-  font-weight: 900;
+  font-family: var(--font-body);
+  font-weight: 800;
   font-size: clamp(11.5px, 1.1vw, 13.5px);
   letter-spacing: 0.8px;
   text-transform: uppercase;
   box-shadow: 2px 3px 0px #121212;
-  transform: translate(-50%, -50%) rotate(-4deg);
+  transform: translate(-50%, -50%) rotate(-3deg);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -573,15 +573,15 @@ button {
 .badge-text {
   position: relative;
   z-index: 10;
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: clamp(8px, 0.8vw, 9.5px);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(9px, 0.9vw, 11px);
   text-transform: uppercase;
   color: #121212;
-  letter-spacing: 0.1px;
+  letter-spacing: 0.4px;
   text-align: center;
   white-space: nowrap;
-  max-width: 72%;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2562,13 +2562,13 @@ button {
   }
 
   .title-badge--starburst {
-    width: 80px;
-    height: 80px;
+    width: 86px;
+    height: 86px;
   }
 
   .badge-text {
-    font-size: 7.5px;
-    letter-spacing: 0.1px;
+    font-size: 8px;
+    letter-spacing: 0.3px;
   }
 
   .quick-features__grid {
