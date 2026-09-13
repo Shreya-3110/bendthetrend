@@ -506,7 +506,7 @@ button {
   align-items: center;
   text-align: center;
   font-size: clamp(48px, 7.5vw, 96px);
-  line-height: 1.04;
+  line-height: 1.08;
   letter-spacing: -1.2px;
   margin-bottom: 40px;
 }
@@ -529,8 +529,8 @@ button {
 }
 
 .title-badge--starburst {
-  width: 140px;
-  height: 140px;
+  width: 155px;
+  height: 145px;
 }
 
 .title-badge--rot-left {
@@ -567,10 +567,10 @@ button {
   z-index: 15;
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 13.5px;
+  font-size: 12.5px;
   text-transform: uppercase;
   color: #121212;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-align: center;
   white-space: nowrap;
 }
@@ -2544,17 +2544,17 @@ button {
 
   .section-heading--stacked {
     font-size: clamp(34px, 8.5vw, 54px);
-    line-height: 1.08;
+    line-height: 1.12;
     margin-bottom: 28px;
   }
 
   .title-badge--starburst {
-    width: 108px;
-    height: 108px;
+    width: 120px;
+    height: 112px;
   }
 
   .badge-text {
-    font-size: 11px;
+    font-size: 10.5px;
     letter-spacing: 0.4px;
   }
 
