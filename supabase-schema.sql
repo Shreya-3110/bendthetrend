@@ -6,7 +6,18 @@
 -- 1. Enable UUID Extension
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- 2. Create Categories Table
+-- 2. Create Brands Table (Brand / Client entity)
+CREATE TABLE IF NOT EXISTS public.brands (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    sort_order INTEGER DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_brands_sort_order ON public.brands(sort_order ASC);
+
+-- 3. Create Categories Table
 CREATE TABLE IF NOT EXISTS public.categories (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
@@ -14,9 +25,10 @@ CREATE TABLE IF NOT EXISTS public.categories (
     created_at TIMESTAMPTZ DEFAULT now()
 );
 
--- 3. Create Portfolio Projects Table
+-- 4. Create Portfolio Projects Table
 CREATE TABLE IF NOT EXISTS public.portfolio_projects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    brand_id UUID REFERENCES public.brands(id) ON DELETE SET NULL,
     title TEXT NOT NULL,
     client TEXT NOT NULL,
     slug TEXT UNIQUE NOT NULL,
@@ -35,11 +47,25 @@ CREATE TABLE IF NOT EXISTS public.portfolio_projects (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- Index for fast queries
+-- Safe migration column addition if table already existed without brand_id
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM information_schema.columns 
+        WHERE table_schema = 'public' 
+        AND table_name = 'portfolio_projects' 
+        AND column_name = 'brand_id'
+    ) THEN
+        ALTER TABLE public.portfolio_projects ADD COLUMN brand_id UUID REFERENCES public.brands(id) ON DELETE SET NULL;
+    END IF;
+END $$;
+
+-- Indexes for fast queries
 CREATE INDEX IF NOT EXISTS idx_portfolio_published_order ON public.portfolio_projects(published, sort_order ASC);
 CREATE INDEX IF NOT EXISTS idx_portfolio_category ON public.portfolio_projects(category);
+CREATE INDEX IF NOT EXISTS idx_portfolio_brand ON public.portfolio_projects(brand_id);
 
--- 4. Create Portfolio Media Table (for Multi-Image Galleries and attachments)
+-- 5. Create Portfolio Media Table (for Multi-Image Galleries and attachments)
 CREATE TABLE IF NOT EXISTS public.portfolio_media (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     project_id UUID NOT NULL REFERENCES public.portfolio_projects(id) ON DELETE CASCADE,
@@ -51,7 +77,7 @@ CREATE TABLE IF NOT EXISTS public.portfolio_media (
 
 CREATE INDEX IF NOT EXISTS idx_media_project_order ON public.portfolio_media(project_id, sort_order ASC);
 
--- 5. Auto-update `updated_at` Timestamp Trigger
+-- 6. Auto-update `updated_at` Timestamp Trigger
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -66,15 +92,29 @@ CREATE TRIGGER set_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION public.handle_updated_at();
 
--- 6. Storage Bucket for Portfolio Media
+-- 7. Storage Bucket for Portfolio Media
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('portfolio-media', 'portfolio-media', true)
 ON CONFLICT (id) DO NOTHING;
 
--- 7. Row Level Security (RLS)
+-- 8. Row Level Security (RLS)
+ALTER TABLE public.brands ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.portfolio_projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.portfolio_media ENABLE ROW LEVEL SECURITY;
+
+-- Brands RLS Policies
+DROP POLICY IF EXISTS "Public can view brands" ON public.brands;
+CREATE POLICY "Public can view brands"
+    ON public.brands FOR SELECT
+    USING (true);
+
+DROP POLICY IF EXISTS "Admins can manage brands" ON public.brands;
+CREATE POLICY "Admins can manage brands"
+    ON public.brands FOR ALL
+    TO authenticated
+    USING (true)
+    WITH CHECK (true);
 
 -- Categories RLS Policies
 DROP POLICY IF EXISTS "Public can view categories" ON public.categories;
@@ -114,6 +154,7 @@ CREATE POLICY "Admins can update projects"
     USING (true)
     WITH CHECK (true);
 
+-- Portfolio Projects Delete Policy
 DROP POLICY IF EXISTS "Admins can delete projects" ON public.portfolio_projects;
 CREATE POLICY "Admins can delete projects"
     ON public.portfolio_projects FOR DELETE
@@ -164,6 +205,16 @@ CREATE POLICY "Admins can delete portfolio media files"
     USING (bucket_id = 'portfolio-media');
 
 -- ==============================================================================
+-- SEED INITIAL BRANDS
+-- ==============================================================================
+INSERT INTO public.brands (id, name, slug, sort_order) VALUES
+('b1111111-1111-1111-1111-111111111111', 'MG Jewellers', 'mg-jewellers', 1),
+('b2222222-2222-2222-2222-222222222222', 'The Sofa Company', 'the-sofa-company', 2),
+('b3333333-3333-3333-3333-333333333333', 'Arihant Dental Care', 'arihant-dental-care', 3),
+('b4444444-4444-4444-4444-444444444444', 'Pulse Fitness', 'pulse-fitness', 4)
+ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, sort_order = EXCLUDED.sort_order;
+
+-- ==============================================================================
 -- SEED INITIAL CATEGORIES
 -- ==============================================================================
 INSERT INTO public.categories (id, name, sort_order) VALUES
@@ -178,10 +229,11 @@ ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, sort_order = EXCLUDED.sort_
 -- SEED EXISTING PORTFOLIO PROJECTS
 -- ==============================================================================
 INSERT INTO public.portfolio_projects 
-(id, title, client, slug, category, category_label, description, detailed_description, thumbnail_url, media_type, media_url, performance_badge, featured, published, sort_order)
+(id, brand_id, title, client, slug, category, category_label, description, detailed_description, thumbnail_url, media_type, media_url, performance_badge, featured, published, sort_order)
 VALUES
 (
     '11111111-1111-1111-1111-111111111111',
+    'b1111111-1111-1111-1111-111111111111',
     'Royal Heritage Collection',
     'MG Jewellers',
     'mg-jewellers-royal-heritage',
@@ -199,9 +251,10 @@ VALUES
 ),
 (
     '22222222-2222-2222-2222-222222222222',
+    'b2222222-2222-2222-2222-222222222222',
     'Living Room Comfort',
-    'The Indian Sofa Company',
-    'the-indian-sofa-company-comfort',
+    'The Sofa Company',
+    'the-sofa-company-comfort',
     'social',
     'Home & Living',
     'Premium e-commerce web design, performance ads & social media growth driving multi-fold orders.',
@@ -216,6 +269,7 @@ VALUES
 ),
 (
     '33333333-3333-3333-3333-333333333333',
+    'b1111111-1111-1111-1111-111111111111',
     'Diamond Sparkle & Craft',
     'MG Jewellers',
     'mg-jewellers-diamond-sparkle',
@@ -233,6 +287,7 @@ VALUES
 ),
 (
     '44444444-4444-4444-4444-444444444444',
+    'b2222222-2222-2222-2222-222222222222',
     'Craft & Fabric Spotlight',
     'The Sofa Company',
     'the-sofa-company-craft-spotlight',
@@ -250,6 +305,7 @@ VALUES
 ),
 (
     '55555555-5555-5555-5555-555555555555',
+    'b1111111-1111-1111-1111-111111111111',
     'Luxury Bridal Showcase',
     'MG Jewellers',
     'mg-jewellers-bridal-showcase',
@@ -267,6 +323,7 @@ VALUES
 ),
 (
     '66666666-6666-6666-6666-666666666666',
+    'b4444444-4444-4444-4444-444444444444',
     'Pulse Fitness Rebrand',
     'Pulse Fitness',
     'pulse-fitness-rebrand',
@@ -284,6 +341,7 @@ VALUES
 ),
 (
     '77777777-7777-7777-7777-777777777777',
+    'b3333333-3333-3333-3333-333333333333',
     'Brand & Social Campaigns',
     'Arihant Dental Care',
     'arihant-dental-care-campaigns',
@@ -300,6 +358,7 @@ VALUES
     7
 )
 ON CONFLICT (id) DO UPDATE SET 
+    brand_id = EXCLUDED.brand_id,
     title = EXCLUDED.title,
     client = EXCLUDED.client,
     category = EXCLUDED.category,

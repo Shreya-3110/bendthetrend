@@ -1302,38 +1302,46 @@
 
   <!-- ==================== CONTACT SECTION (#contact) ==================== -->
   <section class="contact-section" id="contact">
-    <!-- Upward Yellow Awning Scallop Divider -->
+    <!-- Yellow Downward Scallop Divider -->
     <div class="scallop-divider scallop-divider--yellow-down" aria-hidden="true"></div>
 
-    <div class="contact-wrap">
-      <!-- Cream Quote Card Panel -->
-      <div class="quote-card reveal-on-scroll">
+    <div class="contact-stage">
+      <!-- Cream Quote Card -->
+      <div class="quote-card">
+        <!-- Left Column: Visual & Copy -->
         <div class="quote-card__visual">
-          <img src="assets/img_38.png" alt="Let's Go!" class="quote-card__img" loading="lazy" />
+          <div class="quote-card__illustration-wrap">
+            <img src="assets/img_38.png" alt="Let's Go!" class="quote-card__img" loading="lazy" />
+          </div>
           <h2 class="quote-card__title">Need a custom quote?</h2>
-          <p class="quote-card__subtitle">Don't let your ideas sit idle—slide into our inbox and let's make magic!</p>
+          <p class="quote-card__subtitle">Don't let your ideas sit idle—slide<br />into our inbox and let's make magic!</p>
         </div>
 
+        <!-- Vertical Divider (rendered in CSS or flex/grid) -->
+        <div class="quote-card__divider" aria-hidden="true"></div>
+
+        <!-- Right Column: Form -->
         <div class="quote-card__form-wrap">
           <form class="quote-form" id="contactForm">
             <div class="quote-form__group">
               <label for="contactName" class="quote-form__label">Name</label>
-              <input type="text" id="contactName" name="name" class="quote-form__input" placeholder="Your full name" required autocomplete="name" />
+              <input type="text" id="contactName" name="name" class="quote-form__input" required autocomplete="name" />
             </div>
 
             <div class="quote-form__group">
               <label for="contactEmail" class="quote-form__label">Email</label>
-              <input type="email" id="contactEmail" name="email" class="quote-form__input" placeholder="you@company.com" required autocomplete="email" />
+              <input type="email" id="contactEmail" name="email" class="quote-form__input" required autocomplete="email" />
             </div>
 
             <div class="quote-form__group">
-              <label for="contactPhone" class="quote-form__label">Phone Number</label>
-              <input type="tel" id="contactPhone" name="phone" class="quote-form__input" placeholder="+91 8269149313" autocomplete="tel" />
+              <label for="contactPhone" class="quote-form__label">Phone</label>
+              <input type="tel" id="contactPhone" name="phone" class="quote-form__input" autocomplete="tel" />
             </div>
 
-            <div class="quote-form__group">
-              <label for="contactMsg" class="quote-form__label">Project Message</label>
-              <textarea id="contactMsg" name="message" class="quote-form__textarea" rows="3" placeholder="Tell us about your brand, goals, or timeline..." required></textarea>
+            <div class="quote-form__group quote-form__group--message">
+              <label for="contactMsg" class="quote-form__label">Message</label>
+              <textarea id="contactMsg" name="message" class="quote-form__textarea" rows="2" required></textarea>
+              <span class="quote-form__resize-handle" aria-hidden="true"></span>
             </div>
 
             <button type="submit" class="quote-form__submit" id="submitBtn">Submit Message</button>
@@ -1344,18 +1352,11 @@
           </form>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ==================== FOOTER SECTION (#footer) ==================== -->
-  <footer class="footer-section" id="footer">
-    <div class="footer-frame">
-      <!-- Decorative Yellow Plus Border Left -->
-      <div class="footer-plus-left" aria-hidden="true"></div>
-
-      <div class="footer-inner">
+      <!-- Black Footer Section -->
+      <footer class="footer-section" id="footer">
         <div class="footer-grid">
-          <!-- Col 1: Contact Details -->
+          <!-- Col 1: Contact Info -->
           <div class="footer-col footer-col--contact">
             <div class="footer-contact-group">
               <h3 class="footer-heading">PHONE</h3>
@@ -1366,6 +1367,9 @@
               <a href="mailto:bendthetrend0328@gmail.com" class="footer-contact-link">bendthetrend0328@gmail.com</a>
             </div>
           </div>
+
+          <!-- Divider 1 -->
+          <div class="footer-divider" aria-hidden="true"></div>
 
           <!-- Col 2: Navigation Links -->
           <div class="footer-col footer-col--nav">
@@ -1379,6 +1383,9 @@
             </ul>
           </div>
 
+          <!-- Divider 2 -->
+          <div class="footer-divider" aria-hidden="true"></div>
+
           <!-- Col 3: Social Links -->
           <div class="footer-col footer-col--social">
             <ul class="footer-link-list">
@@ -1390,12 +1397,9 @@
             </ul>
           </div>
         </div>
-      </div>
-
-      <!-- Decorative Yellow Plus Border Bottom -->
-      <div class="footer-plus-bottom" aria-hidden="true"></div>
+      </footer>
     </div>
-  </footer>
+  </section>
 
   <!-- ==================== FLOATING BACK TO TOP ==================== -->
   <a href="#hero" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>

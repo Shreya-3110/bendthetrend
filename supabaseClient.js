@@ -11,10 +11,43 @@ export const supabase = isSupabaseConfigured()
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
+// Built-in curated seed brands
+export const SEED_BRANDS = [
+  {
+    id: 'b1111111-1111-1111-1111-111111111111',
+    name: 'MG Jewellers',
+    slug: 'mg-jewellers',
+    sort_order: 1,
+    created_at: '2026-01-01T00:00:00Z'
+  },
+  {
+    id: 'b2222222-2222-2222-2222-222222222222',
+    name: 'The Sofa Company',
+    slug: 'the-sofa-company',
+    sort_order: 2,
+    created_at: '2026-01-01T00:00:00Z'
+  },
+  {
+    id: 'b3333333-3333-3333-3333-333333333333',
+    name: 'Arihant Dental Care',
+    slug: 'arihant-dental-care',
+    sort_order: 3,
+    created_at: '2026-01-01T00:00:00Z'
+  },
+  {
+    id: 'b4444444-4444-4444-4444-444444444444',
+    name: 'Pulse Fitness',
+    slug: 'pulse-fitness',
+    sort_order: 4,
+    created_at: '2026-01-01T00:00:00Z'
+  }
+];
+
 // Built-in curated seed projects fallback when offline or unconfigured
 export const SEED_PROJECTS = [
   {
     id: '11111111-1111-1111-1111-111111111111',
+    brand_id: 'b1111111-1111-1111-1111-111111111111',
     title: 'Royal Heritage Collection',
     client: 'MG Jewellers',
     slug: 'mg-jewellers-royal-heritage',
@@ -32,9 +65,10 @@ export const SEED_PROJECTS = [
   },
   {
     id: '22222222-2222-2222-2222-222222222222',
+    brand_id: 'b2222222-2222-2222-2222-222222222222',
     title: 'Living Room Comfort',
-    client: 'The Indian Sofa Company',
-    slug: 'the-indian-sofa-company-comfort',
+    client: 'The Sofa Company',
+    slug: 'the-sofa-company-comfort',
     category: 'social',
     category_label: 'Home & Living',
     description: 'Premium e-commerce web design, performance ads & social media growth driving multi-fold orders.',
@@ -49,6 +83,7 @@ export const SEED_PROJECTS = [
   },
   {
     id: '33333333-3333-3333-3333-333333333333',
+    brand_id: 'b1111111-1111-1111-1111-111111111111',
     title: 'Diamond Sparkle & Craft',
     client: 'MG Jewellers',
     slug: 'mg-jewellers-diamond-sparkle',
@@ -66,6 +101,7 @@ export const SEED_PROJECTS = [
   },
   {
     id: '44444444-4444-4444-4444-444444444444',
+    brand_id: 'b2222222-2222-2222-2222-222222222222',
     title: 'Craft & Fabric Spotlight',
     client: 'The Sofa Company',
     slug: 'the-sofa-company-craft-spotlight',
@@ -83,6 +119,7 @@ export const SEED_PROJECTS = [
   },
   {
     id: '55555555-5555-5555-5555-555555555555',
+    brand_id: 'b1111111-1111-1111-1111-111111111111',
     title: 'Luxury Bridal Showcase',
     client: 'MG Jewellers',
     slug: 'mg-jewellers-bridal-showcase',
@@ -100,6 +137,7 @@ export const SEED_PROJECTS = [
   },
   {
     id: '66666666-6666-6666-6666-666666666666',
+    brand_id: 'b4444444-4444-4444-4444-444444444444',
     title: 'Pulse Fitness Rebrand',
     client: 'Pulse Fitness',
     slug: 'pulse-fitness-rebrand',
@@ -117,6 +155,7 @@ export const SEED_PROJECTS = [
   },
   {
     id: '77777777-7777-7777-7777-777777777777',
+    brand_id: 'b3333333-3333-3333-3333-333333333333',
     title: 'Brand & Social Campaigns',
     client: 'Arihant Dental Care',
     slug: 'arihant-dental-care-campaigns',

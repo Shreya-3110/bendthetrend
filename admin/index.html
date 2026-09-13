@@ -23,6 +23,9 @@
       </div>
 
       <div class="admin-header__actions" id="headerActions" style="display: none;">
+        <button id="headerManageBrandsBtn" class="btn btn--subtle">
+          <span>🏢 Manage Brands</span>
+        </button>
         <a href="/portfolio.html" target="_blank" class="btn btn--subtle">
           <span>View Live Site</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
@@ -43,11 +46,11 @@
         <div class="auth-card__header">
           <div class="auth-card__icon">✦</div>
           <h1 class="auth-card__title">Admin Sign In</h1>
-          <p class="auth-card__subtitle">Enter your agency credentials to manage portfolio projects</p>
+          <p class="auth-card__subtitle">Enter your agency credentials to manage portfolio projects & brands</p>
         </div>
 
         <div class="alert alert--info" id="configAlert" style="display: none;">
-          <strong>Notice:</strong> Supabase keys are not set in <code>.env</code>. You can set them in Supabase or configure them in your environment variables.
+          <strong>Notice:</strong> Supabase keys are not set in <code>.env</code>. Running in interactive demo mode with persistent local storage.
         </div>
 
         <form id="loginForm" class="auth-form">
@@ -85,6 +88,10 @@
             <div class="stat-card__label">Total Projects</div>
             <div class="stat-card__value" id="statTotal">0</div>
           </div>
+          <div class="stat-card stat-card--purple">
+            <div class="stat-card__label">Brands / Clients</div>
+            <div class="stat-card__value" id="statBrands">0</div>
+          </div>
           <div class="stat-card stat-card--success">
             <div class="stat-card__label">Published Live</div>
             <div class="stat-card__value" id="statPublished">0</div>
@@ -93,10 +100,6 @@
             <div class="stat-card__label">Drafts</div>
             <div class="stat-card__value" id="statDrafts">0</div>
           </div>
-          <div class="stat-card stat-card--purple">
-            <div class="stat-card__label">Categories</div>
-            <div class="stat-card__value" id="statCategories">5</div>
-          </div>
         </div>
 
         <!-- Controls / Filter / Actions Toolbar -->
@@ -104,9 +107,16 @@
           <div class="toolbar__left">
             <div class="search-box">
               <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="searchInput" class="search-input" placeholder="Search by title, client, or tag..." />
+              <input type="text" id="searchInput" class="search-input" placeholder="Search by title, brand, or tag..." />
             </div>
             
+            <!-- Brand Filter -->
+            <select id="brandFilter" class="select-filter">
+              <option value="all">All Brands</option>
+              <!-- Dynamically populated via admin.js -->
+            </select>
+
+            <!-- Category Filter -->
             <select id="categoryFilter" class="select-filter">
               <option value="all">All Categories</option>
               <option value="video">Reels & Video</option>
@@ -116,6 +126,7 @@
               <option value="healthcare">Healthcare & Dental</option>
             </select>
 
+            <!-- Status Filter -->
             <select id="statusFilter" class="select-filter">
               <option value="all">All Statuses</option>
               <option value="published">Published Only</option>
@@ -124,6 +135,10 @@
           </div>
 
           <div class="toolbar__right">
+            <button id="manageBrandsBtn" class="btn btn--subtle">
+              <span class="btn__icon">🏢</span>
+              <span>Manage Brands</span>
+            </button>
             <button id="addProjectBtn" class="btn btn--primary">
               <span class="btn__icon">+</span>
               <span>Add New Project</span>
@@ -137,13 +152,14 @@
             <thead>
               <tr>
                 <th width="70">Order</th>
-                <th width="90">Media</th>
-                <th>Project / Client</th>
+                <th width="85">Media</th>
+                <th>Project</th>
+                <th>Brand / Client</th>
                 <th>Category</th>
                 <th>Type</th>
                 <th>Metric Badge</th>
-                <th width="100">Featured</th>
-                <th width="120">Status</th>
+                <th width="90">Featured</th>
+                <th width="110">Status</th>
                 <th width="120" style="text-align: right;">Actions</th>
               </tr>
             </thead>
@@ -176,6 +192,7 @@
 
       <form id="projectForm" class="modal__body">
         <input type="hidden" id="projectId" />
+        <input type="hidden" id="projectClient" />
 
         <div class="form-grid">
           <!-- Title -->
@@ -184,15 +201,21 @@
             <input type="text" id="projectTitle" class="form-input" placeholder="e.g. Royal Heritage Collection" required />
           </div>
 
-          <!-- Client -->
+          <!-- Brand / Client Selector -->
           <div class="form-field form-field--span-6">
-            <label for="projectClient" class="form-label">Client Name <span class="required">*</span></label>
-            <input type="text" id="projectClient" class="form-input" placeholder="e.g. MG Jewellers" required />
+            <div class="form-label-row">
+              <label for="projectBrand" class="form-label">Brand / Client <span class="required">*</span></label>
+              <button type="button" id="inlineAddBrandBtn" class="link-btn">+ New Brand</button>
+            </div>
+            <select id="projectBrand" class="form-select" required>
+              <option value="">Select a Brand...</option>
+              <!-- Dynamically populated via admin.js -->
+            </select>
           </div>
 
           <!-- Category -->
           <div class="form-field form-field--span-6">
-            <label for="projectCategory" class="form-label">Category <span class="required">*</span></label>
+            <label for="projectCategory" class="form-label">Content Category <span class="required">*</span></label>
             <select id="projectCategory" class="form-select" required>
               <option value="video">Reels & Video</option>
               <option value="branding">Branding & Web</option>
@@ -359,7 +382,107 @@
     </div>
   </div>
 
-  <!-- ==================== DELETE CONFIRMATION MODAL ==================== -->
+  <!-- ==================== BRAND MANAGEMENT MODAL ==================== -->
+  <div class="modal" id="brandModal" aria-hidden="true">
+    <div class="modal__backdrop" id="brandModalBackdrop"></div>
+    <div class="modal__dialog modal__dialog--lg">
+      <div class="modal__header">
+        <div>
+          <h2 class="modal__title">Brand &amp; Client Management</h2>
+          <p class="modal__subtitle">Manage agency clients and brands independently from content categories</p>
+        </div>
+        <button class="modal__close" id="brandModalCloseBtn" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal__body">
+        <!-- Add / Edit Brand Form Card -->
+        <div class="brand-form-card">
+          <h3 class="brand-form-title" id="brandFormTitle">Add New Brand</h3>
+          <form id="brandForm" class="brand-form-grid">
+            <input type="hidden" id="brandEditId" />
+            <div class="form-field">
+              <label for="brandNameInput" class="form-label">Brand Name <span class="required">*</span></label>
+              <input type="text" id="brandNameInput" class="form-input" placeholder="e.g. The Sofa Company" required />
+            </div>
+            <div class="form-field">
+              <label for="brandSlugInput" class="form-label">Slug (Identifier)</label>
+              <input type="text" id="brandSlugInput" class="form-input" placeholder="e.g. the-sofa-company" />
+            </div>
+            <div class="form-field">
+              <label for="brandSortOrderInput" class="form-label">Sort Order</label>
+              <input type="number" id="brandSortOrderInput" class="form-input" value="1" min="1" />
+            </div>
+            <div class="brand-form-actions">
+              <button type="button" id="brandFormResetBtn" class="btn btn--subtle btn--sm" style="display: none;">Cancel Edit</button>
+              <button type="submit" id="saveBrandBtn" class="btn btn--primary btn--sm">
+                <span class="btn__text">Save Brand</span>
+                <span class="btn__spinner" style="display: none;"></span>
+              </button>
+            </div>
+          </form>
+          <div class="form-alert form-alert--error" id="brandFormError" style="display: none; margin-top: 10px;"></div>
+        </div>
+
+        <!-- Brands List Table -->
+        <div class="brand-table-wrap">
+          <h3 class="brand-list-title">Existing Brands (<span id="brandListCount">0</span>)</h3>
+          <table class="brand-table">
+            <thead>
+              <tr>
+                <th width="70">Order</th>
+                <th>Brand Name</th>
+                <th>Slug</th>
+                <th width="120">Projects Linked</th>
+                <th width="130" style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="brandsTableBody">
+              <!-- Injected via admin.js -->
+            </tbody>
+          </table>
+          <div class="table-empty" id="brandTableEmpty" style="display: none;">
+            <p>No brands registered yet. Create your first brand above.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <button type="button" class="btn btn--subtle" id="brandModalDoneBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DELETE BRAND WARNING MODAL ==================== -->
+  <div class="modal" id="deleteBrandModal" aria-hidden="true">
+    <div class="modal__backdrop" id="deleteBrandModalBackdrop"></div>
+    <div class="modal__dialog modal__dialog--sm">
+      <div class="modal__header">
+        <h2 class="modal__title">Delete Brand</h2>
+        <button class="modal__close" id="deleteBrandModalCloseBtn">✕</button>
+      </div>
+      <div class="modal__body">
+        <div id="brandDeleteWarningWrap" style="display: none;">
+          <div class="alert alert--danger">
+            <strong>Cannot Delete Brand:</strong> <span id="brandInUseMsg">This brand is currently used by active projects.</span>
+          </div>
+          <p class="modal__warning-text">Please reassign or delete the associated projects before removing this brand.</p>
+        </div>
+        <div id="brandDeleteConfirmWrap">
+          <p>Are you sure you want to delete brand <strong id="deleteBrandName">Brand Name</strong>?</p>
+          <p class="modal__warning-text">This action cannot be undone.</p>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--subtle" id="deleteBrandCancelBtn">Cancel</button>
+        <button type="button" class="btn btn--danger" id="deleteBrandConfirmBtn">
+          <span class="btn__text">Delete Brand</span>
+          <span class="btn__spinner" style="display: none;"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DELETE PROJECT CONFIRMATION MODAL ==================== -->
   <div class="modal" id="deleteModal" aria-hidden="true">
     <div class="modal__backdrop" id="deleteModalBackdrop"></div>
     <div class="modal__dialog modal__dialog--sm">

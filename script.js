@@ -633,6 +633,9 @@ document.addEventListener('DOMContentLoaded', () => {
           .from('portfolio_projects')
           .select(`
             *,
+            brands (
+              id, name, slug
+            ),
             portfolio_media (
               id, type, url, sort_order
             )
@@ -680,6 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const categoryLabel = p.category_label || getDefaultCategoryLabel(category);
       const isVideo = p.media_type === 'video';
       const isGallery = p.media_type === 'gallery';
+      const brandName = (p.brands && p.brands.name) ? p.brands.name : (p.client || '');
       
       let galleryUrls = [];
       if (isGallery) {
@@ -700,7 +704,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="project-card tilt-card video-card" 
              data-category="${escapeAttr(category)}" 
              data-type="${p.media_type || 'image'}" 
-             data-title="${escapeAttr(p.title + ' — ' + (p.client || ''))}" 
+             data-brand="${escapeAttr(brandName)}"
+             data-brand-id="${escapeAttr(p.brand_id || '')}"
+             data-title="${escapeAttr(p.title + (brandName ? ' — ' + brandName : ''))}" 
              data-desc="${escapeAttr(p.detailed_description || p.description)}"
              ${videoUrl ? `data-video="${videoUrl}"` : ''}
              ${imageUrl ? `data-image="${imageUrl}"` : ''}

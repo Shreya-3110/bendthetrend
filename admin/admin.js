@@ -1,9 +1,11 @@
-import { supabase, isSupabaseConfigured, SEED_PROJECTS } from '../supabaseClient.js';
+import { supabase, isSupabaseConfigured, SEED_PROJECTS, SEED_BRANDS } from '../supabaseClient.js';
 
 // ==================== STATE ====================
 let currentUser = null;
 let projectsList = [];
+let brandsList = [];
 let deleteTargetId = null;
+let deleteBrandTargetId = null;
 let selectedGalleryFiles = [];
 let existingGalleryItems = [];
 
@@ -24,16 +26,19 @@ const logoutBtn = document.getElementById('logoutBtn');
 
 // Dashboard elements
 const statTotal = document.getElementById('statTotal');
+const statBrands = document.getElementById('statBrands');
 const statPublished = document.getElementById('statPublished');
 const statDrafts = document.getElementById('statDrafts');
-const statCategories = document.getElementById('statCategories');
 const searchInput = document.getElementById('searchInput');
+const brandFilter = document.getElementById('brandFilter');
 const categoryFilter = document.getElementById('categoryFilter');
 const statusFilter = document.getElementById('statusFilter');
 const projectsTableBody = document.getElementById('projectsTableBody');
 const tableEmpty = document.getElementById('tableEmpty');
 const addProjectBtn = document.getElementById('addProjectBtn');
 const emptyAddBtn = document.getElementById('emptyAddBtn');
+const manageBrandsBtn = document.getElementById('manageBrandsBtn');
+const headerManageBrandsBtn = document.getElementById('headerManageBrandsBtn');
 
 // Project Modal elements
 const projectModal = document.getElementById('projectModal');
@@ -43,10 +48,12 @@ const projectForm = document.getElementById('projectForm');
 const modalTitle = document.getElementById('modalTitle');
 const saveProjectBtn = document.getElementById('saveProjectBtn');
 const modalAlert = document.getElementById('modalAlert');
+const inlineAddBrandBtn = document.getElementById('inlineAddBrandBtn');
 
 // Form inputs
 const projectIdInput = document.getElementById('projectId');
 const projectTitle = document.getElementById('projectTitle');
+const projectBrand = document.getElementById('projectBrand');
 const projectClient = document.getElementById('projectClient');
 const projectCategory = document.getElementById('projectCategory');
 const projectCategoryLabel = document.getElementById('projectCategoryLabel');
@@ -80,7 +87,36 @@ const galleryFileInput = document.getElementById('galleryFileInput');
 const galleryPreviewStrip = document.getElementById('galleryPreviewStrip');
 const projectGalleryUrls = document.getElementById('projectGalleryUrls');
 
-// Delete modal
+// Brand Modal elements
+const brandModal = document.getElementById('brandModal');
+const brandModalBackdrop = document.getElementById('brandModalBackdrop');
+const brandModalCloseBtn = document.getElementById('brandModalCloseBtn');
+const brandModalDoneBtn = document.getElementById('brandModalDoneBtn');
+const brandForm = document.getElementById('brandForm');
+const brandFormTitle = document.getElementById('brandFormTitle');
+const brandEditId = document.getElementById('brandEditId');
+const brandNameInput = document.getElementById('brandNameInput');
+const brandSlugInput = document.getElementById('brandSlugInput');
+const brandSortOrderInput = document.getElementById('brandSortOrderInput');
+const saveBrandBtn = document.getElementById('saveBrandBtn');
+const brandFormResetBtn = document.getElementById('brandFormResetBtn');
+const brandFormError = document.getElementById('brandFormError');
+const brandsTableBody = document.getElementById('brandsTableBody');
+const brandTableEmpty = document.getElementById('brandTableEmpty');
+const brandListCount = document.getElementById('brandListCount');
+
+// Delete Brand modal elements
+const deleteBrandModal = document.getElementById('deleteBrandModal');
+const deleteBrandModalBackdrop = document.getElementById('deleteBrandModalBackdrop');
+const deleteBrandModalCloseBtn = document.getElementById('deleteBrandModalCloseBtn');
+const deleteBrandCancelBtn = document.getElementById('deleteBrandCancelBtn');
+const deleteBrandConfirmBtn = document.getElementById('deleteBrandConfirmBtn');
+const deleteBrandName = document.getElementById('deleteBrandName');
+const brandDeleteWarningWrap = document.getElementById('brandDeleteWarningWrap');
+const brandDeleteConfirmWrap = document.getElementById('brandDeleteConfirmWrap');
+const brandInUseMsg = document.getElementById('brandInUseMsg');
+
+// Delete Project modal
 const deleteModal = document.getElementById('deleteModal');
 const deleteModalCloseBtn = document.getElementById('deleteModalCloseBtn');
 const deleteCancelBtn = document.getElementById('deleteCancelBtn');
@@ -101,9 +137,8 @@ function checkConfiguration() {
   if (!isSupabaseConfigured()) {
     configAlert.style.display = 'block';
     configAlert.innerHTML = `
-      <strong>Demo Mode Active:</strong> Supabase credentials are not yet configured in <code>.env</code>. 
-      Follow the <code>.env.example</code> guide and run <code>supabase-schema.sql</code> in your Supabase SQL editor.
-      For local review, you can test project management with in-memory persistence.
+      <strong>Demo Mode Active:</strong> Supabase credentials are not configured in <code>.env</code>.
+      Running with persistent local storage. Full Brand / Client management is fully testable.
     `;
   }
 }
@@ -111,7 +146,6 @@ function checkConfiguration() {
 // ==================== AUTHENTICATION ====================
 async function checkAuthSession() {
   if (!isSupabaseConfigured()) {
-    // Check local demo session
     const demoSession = localStorage.getItem('btt_admin_demo_session');
     if (demoSession) {
       currentUser = { email: 'admin@bendthetrend.com' };
@@ -142,12 +176,14 @@ function showAuth() {
   headerActions.style.display = 'none';
 }
 
-function showDashboard() {
+async function showDashboard() {
   authSection.style.display = 'none';
   dashboardSection.style.display = 'block';
   headerActions.style.display = 'flex';
   userEmailDisplay.textContent = currentUser?.email || 'admin@bendthetrend.com';
-  loadProjects();
+  
+  await loadBrands();
+  await loadProjects();
 }
 
 async function handleLogin(e) {
@@ -159,12 +195,11 @@ async function handleLogin(e) {
   const password = loginPassword.value;
 
   if (!isSupabaseConfigured()) {
-    // Demo mode: accept any valid password or standard credentials
-    setTimeout(() => {
+    setTimeout(async () => {
       localStorage.setItem('btt_admin_demo_session', JSON.stringify({ email }));
       currentUser = { email };
       setButtonLoading(loginSubmitBtn, false);
-      showDashboard();
+      await showDashboard();
       showToast('Logged in successfully (Demo Mode)', 'success');
     }, 400);
     return;
@@ -174,7 +209,7 @@ async function handleLogin(e) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
     currentUser = data.user;
-    showDashboard();
+    await showDashboard();
     showToast('Logged in successfully', 'success');
   } catch (err) {
     loginError.textContent = err.message || 'Invalid email or password';
@@ -195,12 +230,318 @@ async function handleLogout() {
   showToast('Logged out successfully', 'info');
 }
 
+// ==================== BRANDS LOADING & CRUD ====================
+async function loadBrands() {
+  if (!isSupabaseConfigured()) {
+    const stored = localStorage.getItem('btt_demo_brands');
+    brandsList = stored ? JSON.parse(stored) : [...SEED_BRANDS];
+    if (!stored) saveLocalBrands();
+    populateBrandDropdowns();
+    renderBrandsTable();
+    updateStats();
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('brands')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .order('name', { ascending: true });
+
+    if (error) throw error;
+
+    brandsList = data && data.length > 0 ? data : [...SEED_BRANDS];
+    populateBrandDropdowns();
+    renderBrandsTable();
+    updateStats();
+  } catch (err) {
+    console.error('Failed to load brands from Supabase:', err);
+    brandsList = [...SEED_BRANDS];
+    populateBrandDropdowns();
+    renderBrandsTable();
+    updateStats();
+  }
+}
+
+function populateBrandDropdowns() {
+  // 1. Toolbar Brand Filter Dropdown
+  const currentFilterVal = brandFilter.value;
+  brandFilter.innerHTML = '<option value="all">All Brands</option>';
+  brandsList.forEach(brand => {
+    const opt = document.createElement('option');
+    opt.value = brand.id;
+    opt.textContent = brand.name;
+    brandFilter.appendChild(opt);
+  });
+  if (currentFilterVal && brandsList.some(b => b.id === currentFilterVal)) {
+    brandFilter.value = currentFilterVal;
+  }
+
+  // 2. Project Modal Brand Dropdown
+  const currentSelectedBrand = projectBrand.value;
+  projectBrand.innerHTML = '<option value="">Select a Brand / Client...</option>';
+  brandsList.forEach(brand => {
+    const opt = document.createElement('option');
+    opt.value = brand.id;
+    opt.textContent = brand.name;
+    projectBrand.appendChild(opt);
+  });
+  if (currentSelectedBrand && brandsList.some(b => b.id === currentSelectedBrand)) {
+    projectBrand.value = currentSelectedBrand;
+  }
+}
+
+function renderBrandsTable() {
+  if (!brandsTableBody) return;
+  brandListCount.textContent = brandsList.length;
+
+  if (brandsList.length === 0) {
+    brandsTableBody.innerHTML = '';
+    brandTableEmpty.style.display = 'block';
+    return;
+  }
+
+  brandTableEmpty.style.display = 'none';
+  brandsTableBody.innerHTML = brandsList.map(brand => {
+    const count = getBrandProjectCount(brand.id, brand.name);
+    return `
+      <tr data-brand-id="${brand.id}">
+        <td><strong>#${brand.sort_order || 0}</strong></td>
+        <td><strong>${escapeHtml(brand.name)}</strong></td>
+        <td><code style="font-size:11px; color:var(--text-muted);">${escapeHtml(brand.slug || '')}</code></td>
+        <td>
+          <span class="brand-count-badge">${count}</span>
+        </td>
+        <td>
+          <div class="actions-cell">
+            <button class="btn-icon edit-brand-btn" data-brand-id="${brand.id}" title="Edit Brand">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </button>
+            <button class="btn-icon btn-icon--danger delete-brand-btn" data-brand-id="${brand.id}" title="Delete Brand">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  // Attach brand table action listeners
+  brandsTableBody.querySelectorAll('.edit-brand-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-brand-id');
+      openEditBrand(id);
+    });
+  });
+
+  brandsTableBody.querySelectorAll('.delete-brand-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-brand-id');
+      openDeleteBrandModal(id);
+    });
+  });
+}
+
+function getBrandProjectCount(brandId, brandName) {
+  return projectsList.filter(p => p.brand_id === brandId || (brandName && p.client === brandName)).length;
+}
+
+function openBrandModal() {
+  resetBrandForm();
+  renderBrandsTable();
+  brandModal.classList.add('active');
+  brandModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeBrandModal() {
+  brandModal.classList.remove('active');
+  brandModal.setAttribute('aria-hidden', 'true');
+  resetBrandForm();
+}
+
+function resetBrandForm() {
+  brandForm.reset();
+  brandEditId.value = '';
+  brandFormTitle.textContent = 'Add New Brand';
+  brandSortOrderInput.value = brandsList.length + 1;
+  brandFormResetBtn.style.display = 'none';
+  brandFormError.style.display = 'none';
+}
+
+function openEditBrand(id) {
+  const brand = brandsList.find(b => b.id === id);
+  if (!brand) return;
+
+  brandEditId.value = brand.id;
+  brandNameInput.value = brand.name;
+  brandSlugInput.value = brand.slug || '';
+  brandSortOrderInput.value = brand.sort_order || 1;
+  brandFormTitle.textContent = `Edit Brand: ${brand.name}`;
+  brandFormResetBtn.style.display = 'inline-block';
+  brandNameInput.focus();
+}
+
+async function handleBrandSubmit(e) {
+  e.preventDefault();
+  brandFormError.style.display = 'none';
+  setButtonLoading(saveBrandBtn, true);
+
+  const id = brandEditId.value;
+  const name = brandNameInput.value.trim();
+  const slug = (brandSlugInput.value.trim() || name)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+  const sortOrder = parseInt(brandSortOrderInput.value, 10) || 1;
+
+  if (!name) {
+    brandFormError.textContent = 'Brand name is required';
+    brandFormError.style.display = 'block';
+    setButtonLoading(saveBrandBtn, false);
+    return;
+  }
+
+  const payload = { name, slug, sort_order: sortOrder };
+
+  try {
+    if (!isSupabaseConfigured()) {
+      if (id) {
+        const index = brandsList.findIndex(b => b.id === id);
+        if (index !== -1) {
+          const oldName = brandsList[index].name;
+          brandsList[index] = { ...brandsList[index], ...payload };
+          // Cascade client name updates to projects in demo mode
+          projectsList.forEach(p => {
+            if (p.brand_id === id || p.client === oldName) {
+              p.client = name;
+              p.brand_id = id;
+            }
+          });
+          saveLocalProjects();
+        }
+      } else {
+        const newBrand = {
+          id: `b_${Date.now()}`,
+          ...payload,
+          created_at: new Date().toISOString()
+        };
+        brandsList.push(newBrand);
+      }
+      saveLocalBrands();
+      resetBrandForm();
+      populateBrandDropdowns();
+      renderBrandsTable();
+      renderProjectsTable();
+      updateStats();
+      showToast(id ? 'Brand updated' : 'Brand created', 'success');
+      return;
+    }
+
+    // Supabase Save
+    if (id) {
+      const { error } = await supabase
+        .from('brands')
+        .update(payload)
+        .eq('id', id);
+      if (error) throw error;
+    } else {
+      const { error } = await supabase
+        .from('brands')
+        .insert([payload]);
+      if (error) throw error;
+    }
+
+    resetBrandForm();
+    await loadBrands();
+    await loadProjects();
+    showToast(id ? 'Brand updated successfully' : 'Brand created successfully', 'success');
+  } catch (err) {
+    console.error('Error saving brand:', err);
+    brandFormError.textContent = err.message || 'Error saving brand';
+    brandFormError.style.display = 'block';
+  } finally {
+    setButtonLoading(saveBrandBtn, false);
+  }
+}
+
+function openDeleteBrandModal(id) {
+  const brand = brandsList.find(b => b.id === id);
+  if (!brand) return;
+
+  deleteBrandTargetId = id;
+  deleteBrandName.textContent = brand.name;
+
+  const count = getBrandProjectCount(brand.id, brand.name);
+  if (count > 0) {
+    // Brand is in use!
+    brandDeleteWarningWrap.style.display = 'block';
+    brandDeleteConfirmWrap.style.display = 'none';
+    brandInUseMsg.textContent = `This brand is currently linked to ${count} project${count > 1 ? 's' : ''}. To preserve portfolio integrity, brands in use cannot be deleted.`;
+    deleteBrandConfirmBtn.disabled = true;
+    deleteBrandConfirmBtn.style.display = 'none';
+  } else {
+    brandDeleteWarningWrap.style.display = 'none';
+    brandDeleteConfirmWrap.style.display = 'block';
+    deleteBrandConfirmBtn.disabled = false;
+    deleteBrandConfirmBtn.style.display = 'inline-block';
+  }
+
+  deleteBrandModal.classList.add('active');
+  deleteBrandModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeDeleteBrandModal() {
+  deleteBrandModal.classList.remove('active');
+  deleteBrandModal.setAttribute('aria-hidden', 'true');
+  deleteBrandTargetId = null;
+}
+
+async function confirmDeleteBrand() {
+  if (!deleteBrandTargetId) return;
+  setButtonLoading(deleteBrandConfirmBtn, true, 'Deleting...');
+
+  try {
+    if (!isSupabaseConfigured()) {
+      brandsList = brandsList.filter(b => b.id !== deleteBrandTargetId);
+      saveLocalBrands();
+      closeDeleteBrandModal();
+      populateBrandDropdowns();
+      renderBrandsTable();
+      updateStats();
+      showToast('Brand deleted successfully', 'success');
+      return;
+    }
+
+    const { error } = await supabase
+      .from('brands')
+      .delete()
+      .eq('id', deleteBrandTargetId);
+
+    if (error) throw error;
+
+    closeDeleteBrandModal();
+    await loadBrands();
+    showToast('Brand deleted successfully', 'success');
+  } catch (err) {
+    console.error('Error deleting brand:', err);
+    showToast('Failed to delete brand: ' + (err.message || 'Error'), 'error');
+  } finally {
+    setButtonLoading(deleteBrandConfirmBtn, false, 'Delete Brand');
+  }
+}
+
+function saveLocalBrands() {
+  localStorage.setItem('btt_demo_brands', JSON.stringify(brandsList));
+}
+
 // ==================== PROJECT LOADING ====================
 async function loadProjects() {
   if (!isSupabaseConfigured()) {
-    // Load from local storage or fallback to SEED_PROJECTS
     const stored = localStorage.getItem('btt_demo_projects');
     projectsList = stored ? JSON.parse(stored) : [...SEED_PROJECTS];
+    // Reconcile missing brand_ids from client names
+    reconcileProjectBrands();
     renderProjectsTable();
     updateStats();
     return;
@@ -211,6 +552,9 @@ async function loadProjects() {
       .from('portfolio_projects')
       .select(`
         *,
+        brands (
+          id, name, slug
+        ),
         portfolio_media (
           id, type, url, sort_order
         )
@@ -221,15 +565,28 @@ async function loadProjects() {
     if (error) throw error;
 
     projectsList = projects || [];
+    reconcileProjectBrands();
     renderProjectsTable();
     updateStats();
   } catch (err) {
-    console.error('Failed to load projects:', err);
-    showToast('Failed to load projects from Supabase. Falling back to local cache.', 'error');
+    console.error('Failed to load projects from Supabase:', err);
+    showToast('Falling back to local projects cache', 'error');
     projectsList = [...SEED_PROJECTS];
+    reconcileProjectBrands();
     renderProjectsTable();
     updateStats();
   }
+}
+
+function reconcileProjectBrands() {
+  projectsList.forEach(p => {
+    if (!p.brand_id && p.client) {
+      const match = brandsList.find(b => b.name.toLowerCase() === p.client.toLowerCase());
+      if (match) {
+        p.brand_id = match.id;
+      }
+    }
+  });
 }
 
 function updateStats() {
@@ -238,6 +595,7 @@ function updateStats() {
   const drafts = total - published;
 
   statTotal.textContent = total;
+  statBrands.textContent = brandsList.length;
   statPublished.textContent = published;
   statDrafts.textContent = drafts;
 }
@@ -245,16 +603,28 @@ function updateStats() {
 // ==================== TABLE RENDERING ====================
 function renderProjectsTable() {
   const query = searchInput.value.toLowerCase().trim();
+  const selectedBrandId = brandFilter.value;
   const categoryVal = categoryFilter.value;
   const statusVal = statusFilter.value;
 
   const filtered = projectsList.filter(p => {
-    // Search query filter
+    // Resolve brand name
+    const brandObj = brandsList.find(b => b.id === p.brand_id) || p.brands;
+    const brandName = brandObj ? brandObj.name : (p.client || '');
+
+    // Search query filter (Project title, Brand name, Client name, descriptions, tags)
     const matchQuery = !query || 
       p.title.toLowerCase().includes(query) ||
-      p.client.toLowerCase().includes(query) ||
+      brandName.toLowerCase().includes(query) ||
+      (p.client && p.client.toLowerCase().includes(query)) ||
       (p.category_label && p.category_label.toLowerCase().includes(query)) ||
+      (p.description && p.description.toLowerCase().includes(query)) ||
       (p.performance_badge && p.performance_badge.toLowerCase().includes(query));
+
+    // Brand filter
+    const matchBrand = selectedBrandId === 'all' || 
+      p.brand_id === selectedBrandId || 
+      (brandObj && brandObj.id === selectedBrandId);
 
     // Category filter
     const matchCategory = categoryVal === 'all' || p.category === categoryVal;
@@ -264,7 +634,7 @@ function renderProjectsTable() {
       (statusVal === 'published' && p.published) ||
       (statusVal === 'draft' && !p.published);
 
-    return matchQuery && matchCategory && matchStatus;
+    return matchQuery && matchBrand && matchCategory && matchStatus;
   });
 
   if (filtered.length === 0) {
@@ -275,6 +645,9 @@ function renderProjectsTable() {
 
   tableEmpty.style.display = 'none';
   projectsTableBody.innerHTML = filtered.map(project => {
+    const brandObj = brandsList.find(b => b.id === project.brand_id) || project.brands;
+    const displayBrandName = brandObj ? brandObj.name : (project.client || '—');
+
     const mediaBadgeClass = project.media_type === 'video' ? 'badge--video' :
                            project.media_type === 'gallery' ? 'badge--gallery' : 'badge--image';
     const mediaIcon = project.media_type === 'video' ? '🎬 Video' :
@@ -292,11 +665,13 @@ function renderProjectsTable() {
         <td>
           <div class="project-meta-cell">
             <span class="project-meta-title">${escapeHtml(project.title)}</span>
-            <span class="project-meta-client">${escapeHtml(project.client)}</span>
           </div>
         </td>
         <td>
-          <span class="badge badge--pill">${escapeHtml(project.category_label || project.category)}</span>
+          <span class="brand-badge">${escapeHtml(displayBrandName)}</span>
+        </td>
+        <td>
+          <span class="badge badge--pill">${escapeHtml(project.category_label || getDefaultCategoryLabel(project.category))}</span>
         </td>
         <td>
           <span class="badge ${mediaBadgeClass}">${mediaIcon}</span>
@@ -330,7 +705,6 @@ function renderProjectsTable() {
     `;
   }).join('');
 
-  // Bind table action listeners
   attachTableEventListeners();
 }
 
@@ -397,12 +771,19 @@ async function updateProjectField(id, updates) {
   }
 }
 
-// ==================== MODAL / FORM MANAGEMENT ====================
+// ==================== PROJECT MODAL / FORM MANAGEMENT ====================
 function openAddModal() {
   projectForm.reset();
   projectIdInput.value = '';
   modalTitle.textContent = 'Add New Project';
   modalAlert.style.display = 'none';
+
+  // Populate brand dropdown with fresh list
+  populateBrandDropdowns();
+  if (brandsList.length > 0) {
+    projectBrand.value = brandsList[0].id;
+    projectClient.value = brandsList[0].name;
+  }
 
   // Default values
   projectSortOrder.value = projectsList.length + 1;
@@ -430,8 +811,18 @@ function openEditModal(id) {
   modalTitle.textContent = `Edit Project: ${project.title}`;
   projectIdInput.value = project.id;
 
-  projectTitle.value = project.title || '';
+  populateBrandDropdowns();
+
+  // Set Brand
+  let targetBrandId = project.brand_id;
+  if (!targetBrandId && project.client) {
+    const matchedBrand = brandsList.find(b => b.name.toLowerCase() === project.client.toLowerCase());
+    if (matchedBrand) targetBrandId = matchedBrand.id;
+  }
+  projectBrand.value = targetBrandId || (brandsList[0] ? brandsList[0].id : '');
   projectClient.value = project.client || '';
+
+  projectTitle.value = project.title || '';
   projectCategory.value = project.category || 'branding';
   projectCategoryLabel.value = project.category_label || '';
   projectBadge.value = project.performance_badge || '';
@@ -504,7 +895,6 @@ function clearMediaPreviews() {
 // ==================== MEDIA UPLOADER LOGIC ====================
 async function uploadFileToStorage(file, folder = 'misc') {
   if (!isSupabaseConfigured()) {
-    // In demo mode, convert to base64 Data URL so it persists across refreshes in localStorage
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -538,7 +928,12 @@ async function handleProjectSubmit(e) {
   try {
     const id = projectIdInput.value || (isSupabaseConfigured() ? undefined : `local_${Date.now()}`);
     const title = projectTitle.value.trim();
-    const client = projectClient.value.trim();
+    
+    // Resolve brand
+    const selectedBrandId = projectBrand.value;
+    const matchedBrand = brandsList.find(b => b.id === selectedBrandId);
+    const client = matchedBrand ? matchedBrand.name : (projectClient.value.trim() || 'Bend The Trend Client');
+
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     const category = projectCategory.value;
     const categoryLabel = projectCategoryLabel.value.trim() || getDefaultCategoryLabel(category);
@@ -567,11 +962,9 @@ async function handleProjectSubmit(e) {
 
     // 3. Process Gallery Images (if gallery type)
     let finalGalleryUrls = [];
-    // Keep existing items
     existingGalleryItems.forEach(item => {
       if (item.url) finalGalleryUrls.push(item.url);
     });
-    // Upload newly added files
     if (mediaType === 'gallery' && selectedGalleryFiles.length > 0) {
       setButtonLoading(saveProjectBtn, true, 'Uploading gallery images...');
       for (const file of selectedGalleryFiles) {
@@ -579,13 +972,13 @@ async function handleProjectSubmit(e) {
         finalGalleryUrls.push(url);
       }
     }
-    // Check manual comma input
     const manualGallery = projectGalleryUrls.value.split(',').map(s => s.trim()).filter(Boolean);
     manualGallery.forEach(u => {
       if (!finalGalleryUrls.includes(u)) finalGalleryUrls.push(u);
     });
 
     const projectPayload = {
+      brand_id: selectedBrandId || null,
       title,
       client,
       slug,
@@ -631,14 +1024,12 @@ async function handleProjectSubmit(e) {
     // Supabase Save
     let savedProjectId = id;
     if (id) {
-      // Update
       const { error } = await supabase
         .from('portfolio_projects')
         .update(projectPayload)
         .eq('id', id);
       if (error) throw error;
     } else {
-      // Insert
       const { data, error } = await supabase
         .from('portfolio_projects')
         .insert([projectPayload])
@@ -709,7 +1100,6 @@ async function confirmDelete() {
       return;
     }
 
-    // Supabase delete
     const { error } = await supabase
       .from('portfolio_projects')
       .delete()
@@ -770,17 +1160,34 @@ function initEventListeners() {
 
   // Search & Filters
   searchInput.addEventListener('input', renderProjectsTable);
+  brandFilter.addEventListener('change', renderProjectsTable);
   categoryFilter.addEventListener('change', renderProjectsTable);
   statusFilter.addEventListener('change', renderProjectsTable);
 
-  // Modal actions
+  // Project Modal actions
   addProjectBtn.addEventListener('click', openAddModal);
   emptyAddBtn.addEventListener('click', openAddModal);
   modalCloseBtn.addEventListener('click', closeModal);
   modalCancelBtn.addEventListener('click', closeModal);
   projectForm.addEventListener('submit', handleProjectSubmit);
 
-  // Delete modal actions
+  // Brand Modal actions
+  if (manageBrandsBtn) manageBrandsBtn.addEventListener('click', openBrandModal);
+  if (headerManageBrandsBtn) headerManageBrandsBtn.addEventListener('click', openBrandModal);
+  if (inlineAddBrandBtn) inlineAddBrandBtn.addEventListener('click', openBrandModal);
+  if (brandModalCloseBtn) brandModalCloseBtn.addEventListener('click', closeBrandModal);
+  if (brandModalDoneBtn) brandModalDoneBtn.addEventListener('click', closeBrandModal);
+  if (brandModalBackdrop) brandModalBackdrop.addEventListener('click', closeBrandModal);
+  if (brandForm) brandForm.addEventListener('submit', handleBrandSubmit);
+  if (brandFormResetBtn) brandFormResetBtn.addEventListener('click', resetBrandForm);
+
+  // Brand Delete Modal
+  if (deleteBrandModalCloseBtn) deleteBrandModalCloseBtn.addEventListener('click', closeDeleteBrandModal);
+  if (deleteBrandCancelBtn) deleteBrandCancelBtn.addEventListener('click', closeDeleteBrandModal);
+  if (deleteBrandModalBackdrop) deleteBrandModalBackdrop.addEventListener('click', closeDeleteBrandModal);
+  if (deleteBrandConfirmBtn) deleteBrandConfirmBtn.addEventListener('click', confirmDeleteBrand);
+
+  // Delete Project modal actions
   deleteModalCloseBtn.addEventListener('click', closeDeleteModal);
   deleteCancelBtn.addEventListener('click', closeDeleteModal);
   deleteConfirmBtn.addEventListener('click', confirmDelete);
@@ -838,6 +1245,8 @@ function initEventListeners() {
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       if (projectModal.classList.contains('active')) closeModal();
+      if (brandModal.classList.contains('active')) closeBrandModal();
+      if (deleteBrandModal.classList.contains('active')) closeDeleteBrandModal();
       if (deleteModal.classList.contains('active')) closeDeleteModal();
     }
   });
