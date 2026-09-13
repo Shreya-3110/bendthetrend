@@ -949,7 +949,7 @@ async function handleProjectSubmit(e) {
     const published = projectPublished.checked;
     const featured = projectFeatured.checked;
 
-    const mediaType = document.querySelector('input[name="mediaType"]:checked').value;
+    const mediaType = document.querySelector('input[name="mediaType"]:checked')?.value || 'image';
 
     // 1. Process Thumbnail
     let finalThumbnailUrl = projectThumbnailUrl.value.trim();
@@ -1176,6 +1176,14 @@ function initEventListeners() {
   modalCloseBtn.addEventListener('click', closeModal);
   modalCancelBtn.addEventListener('click', closeModal);
   if (projectModalBackdrop) projectModalBackdrop.addEventListener('click', closeModal);
+  if (projectBrand) {
+    projectBrand.addEventListener('change', (e) => {
+      const selected = brandsList.find(b => b.id === e.target.value);
+      if (selected && projectClient) {
+        projectClient.value = selected.name;
+      }
+    });
+  }
   projectForm.addEventListener('submit', handleProjectSubmit);
 
   // Brand Modal actions
@@ -1284,10 +1292,11 @@ function setButtonLoading(btn, isLoading, text) {
 }
 
 function showToast(message, type = 'info') {
+  if (!adminToast) return;
   adminToast.textContent = message;
   adminToast.className = `toast show toast--${type}`;
   setTimeout(() => {
-    adminToast.classList.remove('show');
+    if (adminToast) adminToast.classList.remove('show');
   }, 3500);
 }
 
