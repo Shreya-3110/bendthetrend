@@ -2536,20 +2536,10 @@ button {
   }
 
   .section-heading--stacked {
-    font-size: clamp(26px, 6.8vw, 38px);
-    line-height: 1.0;
-    gap: clamp(58px, 14vw, 76px);
+    font-size: clamp(32px, 8vw, 48px);
+    line-height: 0.96;
+    gap: 0;
     margin-bottom: 24px;
-  }
-
-  .title-badge--starburst {
-    width: 86px;
-    height: 86px;
-  }
-
-  .badge-text {
-    font-size: 8px;
-    letter-spacing: 0.3px;
   }
 
   .quick-features__grid {
