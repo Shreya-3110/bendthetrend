@@ -509,7 +509,7 @@ button {
   line-height: 1.0;
   letter-spacing: -1.2px;
   margin-bottom: 40px;
-  gap: clamp(65px, 8vw, 100px);
+  gap: clamp(72px, 8.5vw, 108px);
 }
 
 .section-heading--stacked span {
@@ -532,16 +532,16 @@ button {
 }
 
 .title-badge--starburst {
-  width: clamp(86px, 8.5vw, 108px);
-  height: clamp(86px, 8.5vw, 108px);
+  width: clamp(96px, 9.5vw, 120px);
+  height: clamp(96px, 9.5vw, 120px);
 }
 
 .title-badge--rot-left {
-  transform: translate(-50%, -50%) rotate(-6deg);
+  transform: translate(-50%, -50%) rotate(-4deg);
 }
 
 .title-badge--rot-right {
-  transform: translate(-50%, -50%) rotate(6deg);
+  transform: translate(-50%, -50%) rotate(4deg);
 }
 
 .title-badge--pill {
@@ -570,13 +570,13 @@ button {
   z-index: 10;
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: clamp(8.5px, 0.85vw, 10.5px);
+  font-size: clamp(8px, 0.8vw, 9.5px);
   text-transform: uppercase;
   color: #121212;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.1px;
   text-align: center;
   white-space: nowrap;
-  max-width: 80%;
+  max-width: 72%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2552,18 +2552,18 @@ button {
   .section-heading--stacked {
     font-size: clamp(26px, 6.8vw, 38px);
     line-height: 1.0;
-    gap: clamp(52px, 12vw, 72px);
+    gap: clamp(58px, 14vw, 76px);
     margin-bottom: 24px;
   }
 
   .title-badge--starburst {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
   }
 
   .badge-text {
-    font-size: 8px;
-    letter-spacing: 0.15px;
+    font-size: 7.5px;
+    letter-spacing: 0.1px;
   }
 
   .quick-features__grid {
