@@ -505,14 +505,17 @@ button {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-size: clamp(48px, 7.5vw, 96px);
-  line-height: 1.08;
+  font-size: clamp(40px, 6.5vw, 84px);
+  line-height: 1.0;
   letter-spacing: -1.2px;
   margin-bottom: 40px;
+  gap: clamp(44px, 5.5vw, 72px);
 }
 
 .section-heading--stacked span {
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
 /* Title Badge Floating in Optical Center */
@@ -521,7 +524,7 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 5;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -529,8 +532,8 @@ button {
 }
 
 .title-badge--starburst {
-  width: 155px;
-  height: 145px;
+  width: clamp(102px, 11vw, 128px);
+  height: clamp(102px, 11vw, 128px);
 }
 
 .title-badge--rot-left {
@@ -544,14 +547,14 @@ button {
 .title-badge--pill {
   background: var(--accent-yellow);
   color: #121212;
-  border: 2.5px solid #121212;
+  border: 2px solid #121212;
   border-radius: var(--radius-pill);
-  padding: 6px 24px;
+  padding: 5px 20px;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13px;
   text-transform: uppercase;
-  box-shadow: 2px 3px 0px #121212;
+  box-shadow: 2px 2px 0px #121212;
   transform: translate(-50%, -50%) rotate(-4deg);
 }
 
@@ -559,15 +562,15 @@ button {
   position: absolute;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.22));
 }
 
 .badge-text {
   position: relative;
-  z-index: 15;
+  z-index: 10;
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 12.5px;
+  font-size: clamp(10.5px, 1.1vw, 12px);
   text-transform: uppercase;
   color: #121212;
   letter-spacing: 0.5px;
@@ -2543,19 +2546,20 @@ button {
   }
 
   .section-heading--stacked {
-    font-size: clamp(34px, 8.5vw, 54px);
-    line-height: 1.12;
-    margin-bottom: 28px;
+    font-size: clamp(30px, 7.5vw, 44px);
+    line-height: 1.0;
+    gap: clamp(30px, 4.5vw, 42px);
+    margin-bottom: 24px;
   }
 
   .title-badge--starburst {
-    width: 120px;
-    height: 112px;
+    width: 88px;
+    height: 88px;
   }
 
   .badge-text {
-    font-size: 10.5px;
-    letter-spacing: 0.4px;
+    font-size: 9.5px;
+    letter-spacing: 0.3px;
   }
 
   .quick-features__grid {
@@ -2797,21 +2801,45 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease;
-  z-index: 1;
-  display: none !important;
-}
-
-.video-card:hover .play-overlay {
-  display: none !important;
+  transition: all 0.25s ease;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .play-btn-circle {
-  display: none !important;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--accent-yellow);
+  color: #121212;
+  border: 2px solid var(--border-dark);
+  box-shadow: 2px 3px 0px var(--border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
+}
+
+.play-btn-circle .play-icon {
+  margin-left: 2px;
+  color: #121212;
+  font-size: 1.1rem;
+}
+
+.project-card:hover .play-btn-circle,
+.reel-card:hover .play-btn-circle {
+  transform: scale(1.15);
+  background-color: #FFFFFF;
+}
+
+.project-card:hover .play-overlay,
+.reel-card:hover .play-overlay {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 /* Hidden state for filtering */

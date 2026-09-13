@@ -101,12 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Auto-play videos on hover for portfolio cards
-    const reelCards = container.querySelectorAll('.reel-card');
+    // Auto-play videos on hover for portfolio and reel cards
+    const reelCards = container.querySelectorAll('.reel-card, .video-card, .project-card');
     reelCards.forEach(card => {
       if (card.__hasVideoHover) return;
       card.__hasVideoHover = true;
-      const video = card.querySelector('.reel-card__video');
+      const video = card.querySelector('.reel-card__video, video');
       if (video) {
         card.addEventListener('mouseenter', () => {
           video.play().catch(() => {});
@@ -708,7 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const imagesAttr = isGallery ? galleryUrls.join(',') : '';
 
       return `
-        <div class="project-card tilt-card video-card" 
+        <div class="project-card tilt-card video-card reel-card" 
              data-category="${escapeAttr(category)}" 
              data-type="${p.media_type || 'image'}" 
              data-brand="${escapeAttr(brandName)}"
@@ -719,16 +719,16 @@ document.addEventListener('DOMContentLoaded', () => {
              ${imageUrl ? `data-image="${imageUrl}"` : ''}
              ${imagesAttr ? `data-images="${imagesAttr}"` : ''}>
           <div class="project-card__thumb">
-            ${isVideo && !p.thumbnail_url ? `
-              <video class="reel-card__video" src="${videoUrl}#t=1.0" muted loop playsinline preload="metadata" style="height:100%; object-fit:cover;"></video>
+            ${isVideo ? `
+              <video class="reel-card__video" src="${videoUrl}#t=0.5" poster="${imageUrl}" muted loop playsinline preload="auto" style="width:100%; height:100%; object-fit:cover;"></video>
+              <div class="play-overlay">
+                <div class="play-btn-circle">
+                  <span class="play-icon">▶</span>
+                </div>
+              </div>
             ` : `
               <img src="${imageUrl || 'assets/img_1.png'}" alt="${escapeAttr(p.title)}" loading="lazy" />
             `}
-            <div class="play-overlay">
-              <div class="play-btn-circle">
-                <span class="play-icon">▶</span>
-              </div>
-            </div>
             <span class="project-card__pill">${escapeHtml(categoryLabel)}</span>
             ${p.performance_badge ? `<span class="metric-badge">${escapeHtml(p.performance_badge)}</span>` : ''}
           </div>
