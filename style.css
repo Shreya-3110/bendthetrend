@@ -1756,7 +1756,7 @@ button {
 /* Upward Yellow Awning Scallops into Black */
 .scallop-divider--yellow-down {
   background-color: #0b0b0b;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 30' width='48' height='30'%3E%3Cpath d='M 0 30 A 24 24 0 0 1 48 30 Z' fill='%23FED130'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 30' width='48' height='30'%3E%3Cpath d='M 0 30 A 24 24 0 0 1 48 30 Z' fill='%23FFEA2E'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: 48px 30px;
   background-position: bottom;
@@ -1765,26 +1765,31 @@ button {
   margin-bottom: -1px;
 }
 
-/* Yellow Halftone Dot Pattern Wrapper */
+/* Yellow Outer Wrapper with Subtle Halftone Texture */
 .contact-wrap {
   width: 100%;
-  background-color: #FED130;
-  background-image: radial-gradient(#121212 1.8px, transparent 1.8px);
+  background-color: #FFEA2E;
+  background-image: radial-gradient(#121212 1.4px, transparent 1.4px);
   background-size: 14px 14px;
-  padding: 36px 0 60px;
+  padding: 48px 0 60px;
+  display: flex;
+  justify-content: center;
   position: relative;
 }
 
-/* ----------------- White Quote Card ----------------- */
+/* ----------------- Cream Quote Card Panel ----------------- */
 .quote-card {
-  background-color: #FFFFFF;
-  border-radius: 40px;
-  padding: 52px 64px 44px 64px;
+  background-color: #FAF8F5;
+  border-radius: 46px;
+  width: 93%;
+  max-width: 1550px;
+  margin: 0 auto;
+  padding: 70px 80px;
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 60px;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 64px;
   align-items: center;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
 .quote-card__visual {
@@ -1796,23 +1801,34 @@ button {
 
 .quote-card__img {
   width: 100%;
-  max-width: 270px;
+  max-width: 280px;
   height: auto;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
   object-fit: contain;
 }
 
 .quote-card__title {
   font-family: var(--font-display);
-  font-size: 38px;
+  font-size: clamp(38px, 3.4vw, 48px);
   font-weight: 900;
   letter-spacing: -0.5px;
   color: #121212;
-  margin: 0;
+  margin: 0 0 12px 0;
   line-height: 1.15;
+  text-transform: uppercase;
 }
 
-/* ----------------- Quote Form ----------------- */
+.quote-card__subtitle {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(18, 18, 18, 0.75);
+  font-weight: 500;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ----------------- Real Functional Quote Form ----------------- */
 .quote-card__form-wrap {
   width: 100%;
 }
@@ -1825,16 +1841,16 @@ button {
 .quote-form__group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .quote-form__label {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
   color: #121212;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   line-height: 1.2;
 }
 
@@ -1843,18 +1859,18 @@ button {
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 2.5px solid #FED130;
+  border-bottom: 2px solid #FFEA2E;
   border-radius: 0;
   font-family: var(--font-body);
   font-size: 16px;
   color: #121212;
-  padding: 2px 0 6px 0;
+  padding: 6px 0 10px 0;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .quote-form__textarea {
-  min-height: 48px;
+  min-height: 64px;
   resize: vertical;
 }
 
@@ -1865,16 +1881,17 @@ button {
 
 .quote-form__submit {
   width: 100%;
-  margin-top: 10px;
-  padding: 14px 28px;
-  background-color: #FED130;
+  margin-top: 14px;
+  padding: 16px 28px;
+  background-color: #FFEA2E;
   border: 2px solid #121212;
   border-radius: 9999px;
-  box-shadow: 0 4px 0 #121212;
+  box-shadow: 4px 4px 0px #121212;
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 900;
   letter-spacing: 0.5px;
+  text-transform: uppercase;
   color: #121212;
   cursor: pointer;
   text-align: center;
@@ -1883,27 +1900,29 @@ button {
 
 .quote-form__submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 #121212;
+  box-shadow: 4px 6px 0px #121212;
   background-color: #FFDB4D;
 }
 
 .quote-form__submit:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #121212;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #121212;
 }
 
-/* ==================== FOOTER SECTION ==================== */
+/* ==================== FOOTER SECTION (#footer) ==================== */
 .footer-section {
   position: relative;
-  background-color: #0b0b0b;
+  background-color: #121212;
   width: 100%;
-  padding: 70px 0 70px 0;
+  padding: 60px 0 70px 0;
   overflow: hidden;
 }
 
 .footer-frame {
   position: relative;
-  width: 100%;
+  width: 93%;
+  max-width: 1550px;
+  margin: 0 auto;
 }
 
 .footer-plus-left {
@@ -1911,9 +1930,10 @@ button {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 56px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M7,2 L7,12 M2,7 L12,7' stroke='%23FED130' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+  width: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M7,3 L7,11 M3,7 L11,7' stroke='%23FFEA2E' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
   background-size: 14px 14px;
+  opacity: 0.85;
   pointer-events: none;
 }
 
@@ -1922,55 +1942,85 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 56px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M7,2 L7,12 M2,7 L12,7' stroke='%23FED130' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+  height: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M7,3 L7,11 M3,7 L11,7' stroke='%23FFEA2E' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E");
   background-size: 14px 14px;
+  opacity: 0.85;
   pointer-events: none;
 }
 
 .footer-inner {
-  padding-left: 96px;
-  padding-right: 24px;
-  padding-bottom: 40px;
+  padding: 0 0 40px 64px;
 }
 
 .footer-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: start;
+}
+
+.footer-col--contact {
   display: flex;
-  flex-direction: row;
-  gap: clamp(48px, 8vw, 120px);
-  align-items: flex-start;
-  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.footer-contact-group {
+  margin-bottom: 30px;
+}
+
+.footer-contact-group:last-child {
+  margin-bottom: 0;
+}
+
+.footer-heading {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.5vw, 36px);
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  color: #FFEA2E;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.footer-contact-link {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-link:hover {
+  color: #FFEA2E;
 }
 
 .footer-link-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   margin: 0;
   padding: 0;
 }
 
 .footer-link-list li a {
   font-family: var(--font-display);
-  font-size: clamp(36px, 4.8vw, 54px);
+  font-size: clamp(30px, 3.2vw, 44px);
   font-weight: 900;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
   line-height: 1.25;
-  color: #FED130;
+  color: #FFEA2E;
   text-decoration: none;
   display: inline-block;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .footer-link-list li a:hover {
-  opacity: 0.82;
-  transform: translateX(6px);
-}
-
-.footer-link-list li a:hover {
-  opacity: 0.82;
-  transform: translateX(6px);
+  opacity: 0.85;
+  transform: translateX(5px);
 }
 
 /* ==================== DYNAMIC ANIMATIONS & SCROLL REVEALS ==================== */
