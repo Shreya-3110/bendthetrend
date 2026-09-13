@@ -64,8 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
+  // Check if device is touch or mobile
+  const isTouchDevice = () => window.innerWidth <= 768 || window.matchMedia('(pointer: coarse)').matches;
+
   // ==================== 3. 3D MAGNETIC CARD TILT & HIGHLIGHT ====================
   function initTiltCards(container = document) {
+    if (isTouchDevice()) return;
+
     const tiltCards = container.querySelectorAll('.tilt-card, .quick-card, .team-card, .project-card');
 
     tiltCards.forEach((card) => {
@@ -114,19 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initTiltCards();
 
-  // ==================== 4. MAGNETIC BUTTON ATTRACTION ====================
-  const magneticButtons = document.querySelectorAll('.btn, .menu-btn, .quote-form__submit, .back-to-top');
-  magneticButtons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+  // ==================== 4. MAGNETIC BUTTON ATTRACTION (DESKTOP ONLY) ====================
+  if (!isTouchDevice()) {
+    const magneticButtons = document.querySelectorAll('.btn, .menu-btn, .quote-form__submit, .back-to-top');
+    magneticButtons.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
     });
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = '';
-    });
-  });
+  }
 
   // ==================== 5. STICKY HEADER BLUR ON SCROLL ====================
   const siteHeader = document.querySelector('.header');
