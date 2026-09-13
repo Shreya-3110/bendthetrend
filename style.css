@@ -115,17 +115,14 @@ button {
   justify-content: space-between;
 }
 
-/* Logo Circular Badge */
+/* Logo Square Box Badge */
 .logo {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
   border: 2px solid #FFFFFF;
-  padding: 0;
+  padding: 4px 10px;
   color: #FFFFFF;
   font-family: var(--font-heading);
   font-weight: 800;
@@ -133,27 +130,24 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   text-decoration: none;
-  flex-shrink: 0;
-  text-align: center;
   box-sizing: border-box;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .logo:hover {
-  transform: scale(1.05);
+  transform: translateY(-1px);
 }
 
 .logo__brand {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: 0.8px;
+  line-height: 1;
 }
 
 .logo__sub {
-  font-size: 7px;
-  letter-spacing: 1.5px;
-  margin: 1px 0;
+  font-size: 8px;
+  letter-spacing: 2px;
+  margin: 2px 0;
   opacity: 0.85;
   line-height: 1;
 }
@@ -490,10 +484,10 @@ button {
   background-position: bottom;
 }
 
-/* ==================== SECTION TITLE HEADINGS & CENTER BADGES ==================== */
+/* ==================== SECTION TITLE HEADINGS & STICKER BADGES ==================== */
 .section-title-wrap {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -520,87 +514,58 @@ button {
   align-items: center;
   text-align: center;
   font-family: var(--font-display);
-  font-size: clamp(42px, 7vw, 92px);
-  line-height: 1.04;
+  font-size: clamp(44px, 7.5vw, 96px);
+  line-height: 0.96;
   letter-spacing: 0;
   text-transform: none;
-  margin-bottom: 40px;
-  gap: clamp(74px, 8.5vw, 110px);
+  margin-bottom: 36px;
+  gap: 0;
 }
 
 .section-heading--stacked span {
   display: block;
+}
+
+/* Sticker Sunburst Badges Placed Above Section Headings (Exact Framer Match) */
+.section-sticker-badge {
   position: relative;
-  z-index: 1;
-}
-
-/* Title Badge Floating in Optical Center */
-.title-badge {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 5;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  width: clamp(120px, 12vw, 154px);
+  height: clamp(68px, 6.8vw, 88px);
+  margin-bottom: 14px;
+  transform: rotate(-13deg);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
 }
 
-.title-badge--starburst {
-  width: clamp(102px, 10.5vw, 128px);
-  height: clamp(102px, 10.5vw, 128px);
+.section-sticker-badge:hover {
+  transform: rotate(-7deg) scale(1.08);
 }
 
-.title-badge--rot-left {
-  transform: translate(-50%, -50%) rotate(-3deg);
-}
-
-.title-badge--rot-right {
-  transform: translate(-50%, -50%) rotate(3deg);
-}
-
-.title-badge--pill {
-  background: var(--accent-yellow);
-  color: #121212;
-  border: 2.5px solid #121212;
-  border-radius: var(--radius-pill);
-  padding: 6px 22px;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: clamp(11.5px, 1.1vw, 13.5px);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  box-shadow: 2px 3px 0px #121212;
-  transform: translate(-50%, -50%) rotate(-3deg);
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.starburst-svg {
+.section-sticker-badge .sunburst-svg {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.22));
+  fill: var(--accent-yellow);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.22));
 }
 
-.badge-text {
+.section-sticker-badge .sticker-text {
   position: relative;
-  z-index: 10;
+  z-index: 2;
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(9px, 0.9vw, 11px);
-  text-transform: uppercase;
+  font-size: clamp(13px, 1.25vw, 16.5px);
   color: #121212;
-  letter-spacing: 0.4px;
-  text-align: center;
-  white-space: nowrap;
+  letter-spacing: -0.2px;
   line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  transform: rotate(-3deg);
+  white-space: nowrap;
 }
 
 /* ==================== QUICK FEATURES ==================== */
