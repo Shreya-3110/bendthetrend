@@ -277,6 +277,11 @@
       </a>
       <button class="menu-btn" id="menuToggle" aria-label="Toggle navigation menu">
         <span class="menu-btn__text">MENU</span>
+        <span class="menu-btn__bars" aria-hidden="true">
+          <span class="menu-btn__bar"></span>
+          <span class="menu-btn__bar"></span>
+          <span class="menu-btn__bar"></span>
+        </span>
       </button>
     </div>
 
@@ -584,103 +589,174 @@
         
         <!-- Brand Filter Tabs -->
         <div class="brand-filter-tabs">
-          <button class="brand-tab active" data-brand="all">All Videos (7)</button>
-          <button class="brand-tab" data-brand="mg">MG Jewellers (4)</button>
+          <button class="brand-tab active" data-brand="all">All Videos (6)</button>
           <button class="brand-tab" data-brand="sofa">The Sofa Company (3)</button>
+          <button class="brand-tab" data-brand="mg">MG Jewellers (3)</button>
         </div>
       </div>
 
       <!-- Video Reels Grid -->
       <div class="video-reels-grid" id="videoReelsGrid">
 
-        <!-- MG Jewellers 1 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-1" data-brand="mg" data-type="video" data-title="MG Jewellers — Royal Heritage Collection" data-desc="Luxury gold &amp; diamond jewelry showcase campaign engineered to elevate brand positioning and drive high-intent showroom visits." data-video="assets/MG1.mp4">
-          <div class="reel-card__media">
-            <video class="reel-card__video" src="assets/MG1.mp4#t=1.8" data-start-time="1.8" muted loop playsinline preload="auto"></video>
-            <span class="project-card__pill">MG Jewellers</span>
-            <span class="metric-badge">+320% ROI</span>
-          </div>
-          <div class="project-card__info">
-            <h3 class="project-card__name">Royal Heritage Collection</h3>
-            <p class="project-card__desc">Cinematic jewelry reel with macro sparkle grading &amp; luxury aesthetic.</p>
-          </div>
-        </div>
-
-        <!-- MG Jewellers 2 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-2" data-brand="mg" data-type="video" data-title="MG Jewellers — Diamond Sparkle &amp; Craft" data-desc="High-impact Instagram reel highlighting intricate handcrafted jewelry details and certified diamond brilliance." data-video="assets/MG2.mp4">
-          <div class="reel-card__media">
-            <video class="reel-card__video" src="assets/MG2.mp4" muted loop playsinline preload="metadata"></video>
-            <span class="project-card__pill">MG Jewellers</span>
-            <span class="metric-badge">1.4M Views</span>
-          </div>
-          <div class="project-card__info">
-            <h3 class="project-card__name">Diamond Sparkle &amp; Craft</h3>
-            <p class="project-card__desc">Dynamic motion storytelling showcasing handcrafted fine jewelry.</p>
-          </div>
-        </div>
-
-        <!-- MG Jewellers 3 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-3" data-brand="mg" data-type="video" data-title="MG Jewellers — Modern Solitaire Sparkle" data-desc="Trendsetting social reel created for high engagement across modern young demographics." data-video="assets/MG3.mp4">
-          <div class="reel-card__media">
-            <video class="reel-card__video" src="assets/MG3.mp4" muted loop playsinline preload="metadata"></video>
-            <span class="project-card__pill">MG Jewellers</span>
-            <span class="metric-badge">850K Plays</span>
-          </div>
-          <div class="project-card__info">
-            <h3 class="project-card__name">Modern Solitaire Sparkle</h3>
-            <p class="project-card__desc">Short-form hook-driven creative optimized for organic algorithm reach.</p>
-          </div>
-        </div>
-
-        <!-- MG Jewellers 4 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-4" data-brand="mg" data-type="video" data-title="MG Jewellers — Traditional Kundan Bridal" data-desc="Emotionally resonant wedding season campaign video celebrating heirloom artistry and regal craftsmanship." data-video="assets/MG4.mp4">
-          <div class="reel-card__media">
-            <video class="reel-card__video" src="assets/MG4.mp4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
-            <span class="project-card__pill">MG Jewellers</span>
-            <span class="metric-badge">Bridal Hit</span>
-          </div>
-          <div class="project-card__info">
-            <h3 class="project-card__name">Traditional Kundan Bridal</h3>
-            <p class="project-card__desc">Heritage-inspired motion reel that boosted bridal showroom inquiries by 4x.</p>
-          </div>
-        </div>
-
-        <!-- The Sofa Company 1 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-1" data-brand="sofa" data-type="video" data-title="The Sofa Company — Luxury Living Experience" data-desc="Aesthetic commercial film highlighting bespoke Italian leather sectionals and cozy living room styling." data-video="assets/TheSOFA.MP4">
-          <div class="reel-card__media">
-            <video class="reel-card__video" src="assets/TheSOFA.MP4" muted loop playsinline preload="metadata"></video>
-            <span class="project-card__pill">The Sofa Co.</span>
-            <span class="metric-badge">480K Views</span>
-          </div>
-          <div class="project-card__info">
-            <h3 class="project-card__name">Luxury Living Experience</h3>
-            <p class="project-card__desc">Warm lighting and slow-motion panning showcasing premium home furniture.</p>
-          </div>
-        </div>
-
-        <!-- The Sofa Company 2 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-2" data-brand="sofa" data-type="video" data-title="The Sofa Company — Premium Craftsmanship &amp; Fabric" data-desc="Behind-the-scenes and design spotlight reel showcasing durable materials, custom builds, and customer delight." data-video="assets/TheSOFA2.MP4">
-          <div class="reel-card__media">
-            <video class="reel-card__video" src="assets/TheSOFA2.MP4" muted loop playsinline preload="metadata"></video>
-            <span class="project-card__pill">The Sofa Co.</span>
-            <span class="metric-badge">+240% Sales</span>
-          </div>
-          <div class="project-card__info">
-            <h3 class="project-card__name">Craft &amp; Fabric Spotlight</h3>
-            <p class="project-card__desc">Close-up texture and comfort demonstration that converted viewers into direct buyers.</p>
-          </div>
-        </div>
-
-        <!-- The Sofa Company 3 -->
-        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-3" data-brand="sofa" data-type="video" data-title="The Sofa Company — Modern Aesthetic Home Makeover" data-desc="Interior transformation reel demonstrating how customized sofas elevate living room aesthetics." data-video="assets/TheSOFA3.MP4">
+        <!-- Card 1: The Sofa Company — Modern Home Makeover -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-1" data-brand="sofa" data-type="video" data-title="The Sofa Company — Modern Home Makeover" data-desc="High-aesthetic room transformation video that generated hundreds of direct inquiries." data-video="assets/TheSOFA3.MP4">
           <div class="reel-card__media">
             <video class="reel-card__video" src="assets/TheSOFA3.MP4#t=2.0" data-start-time="2.0" muted loop playsinline preload="auto"></video>
-            <span class="project-card__pill">The Sofa Co.</span>
-            <span class="metric-badge">Viral Reach</span>
+            <span class="project-card__pill">THE SOFA CO.</span>
+            <button class="project-card__expand-btn" aria-label="View case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
           </div>
           <div class="project-card__info">
+            <div class="project-card__meta">
+              <span class="project-card__tag">VIRAL REACH</span>
+              <span class="project-card__divider"></span>
+              <span class="project-card__index">01 / 06</span>
+            </div>
             <h3 class="project-card__name">Modern Home Makeover</h3>
             <p class="project-card__desc">High-aesthetic room transformation video that generated hundreds of direct inquiries.</p>
+            <button class="project-card__case-btn" type="button">
+              <span>VIEW CASE STUDY</span>
+              <span class="case-btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: MG Jewellers — Royal Heritage Collection -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-2" data-brand="mg" data-type="video" data-title="MG Jewellers — Royal Heritage Collection" data-desc="Luxury gold & diamond jewelry showcase campaign engineered to elevate brand positioning and drive high-intent showroom visits." data-video="assets/MG1.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG1.mp4#t=1.8" data-start-time="1.8" muted loop playsinline preload="auto"></video>
+            <span class="project-card__pill">MG JEWELLERS</span>
+            <button class="project-card__expand-btn" aria-label="View case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__meta">
+              <span class="project-card__tag">BRAND POSITIONING</span>
+              <span class="project-card__divider"></span>
+              <span class="project-card__index">02 / 06</span>
+            </div>
+            <h3 class="project-card__name">Royal Heritage Collection</h3>
+            <p class="project-card__desc">Cinematic jewelry reel with macro sparkle grading & luxury aesthetic driving +320% ROI.</p>
+            <button class="project-card__case-btn" type="button">
+              <span>VIEW CASE STUDY</span>
+              <span class="case-btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: The Sofa Company — Craft & Fabric Spotlight -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-1" data-brand="sofa" data-type="video" data-title="The Sofa Company — Craft & Fabric Spotlight" data-desc="Close-up texture and comfort demonstration that converted viewers into direct buyers." data-video="assets/TheSOFA2.MP4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/TheSOFA2.MP4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
+            <span class="project-card__pill">THE SOFA CO.</span>
+            <button class="project-card__expand-btn" aria-label="View case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__meta">
+              <span class="project-card__tag">PERFORMANCE ADS</span>
+              <span class="project-card__divider"></span>
+              <span class="project-card__index">03 / 06</span>
+            </div>
+            <h3 class="project-card__name">Craft & Fabric Spotlight</h3>
+            <p class="project-card__desc">Close-up texture and comfort demonstration that converted viewers into direct buyers.</p>
+            <button class="project-card__case-btn" type="button">
+              <span>VIEW CASE STUDY</span>
+              <span class="case-btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4: MG Jewellers — Diamond Sparkle & Craft -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-2" data-brand="mg" data-type="video" data-title="MG Jewellers — Diamond Sparkle & Craft" data-desc="Dynamic motion storytelling showcasing handcrafted fine jewelry and certified diamond brilliance." data-video="assets/MG2.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG2.mp4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
+            <span class="project-card__pill">MG JEWELLERS</span>
+            <button class="project-card__expand-btn" aria-label="View case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__meta">
+              <span class="project-card__tag">VIRAL REELS</span>
+              <span class="project-card__divider"></span>
+              <span class="project-card__index">04 / 06</span>
+            </div>
+            <h3 class="project-card__name">Diamond Sparkle & Craft</h3>
+            <p class="project-card__desc">Dynamic motion storytelling showcasing handcrafted certified diamond brilliance.</p>
+            <button class="project-card__case-btn" type="button">
+              <span>VIEW CASE STUDY</span>
+              <span class="case-btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 5: MG Jewellers — Traditional Kundan Bridal -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-3" data-brand="mg" data-type="video" data-title="MG Jewellers — Traditional Kundan Bridal" data-desc="Emotionally resonant wedding season campaign video celebrating heirloom artistry and regal craftsmanship." data-video="assets/MG4.mp4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/MG4.mp4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
+            <span class="project-card__pill">MG JEWELLERS</span>
+            <button class="project-card__expand-btn" aria-label="View case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__meta">
+              <span class="project-card__tag">BRIDAL HIT</span>
+              <span class="project-card__divider"></span>
+              <span class="project-card__index">05 / 06</span>
+            </div>
+            <h3 class="project-card__name">Traditional Kundan Bridal</h3>
+            <p class="project-card__desc">Heritage-inspired motion reel that boosted bridal showroom inquiries by 4x.</p>
+            <button class="project-card__case-btn" type="button">
+              <span>VIEW CASE STUDY</span>
+              <span class="case-btn-arrow">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 6: The Sofa Company — Luxury Living Experience -->
+        <div class="project-card reel-card video-card tilt-card reveal-on-scroll reveal-delay-4" data-brand="sofa" data-type="video" data-title="The Sofa Company — Luxury Living Experience" data-desc="Warm lighting and slow-motion panning showcasing bespoke Italian leather sectionals." data-video="assets/TheSOFA.MP4">
+          <div class="reel-card__media">
+            <video class="reel-card__video" src="assets/TheSOFA.MP4#t=1.0" data-start-time="1.0" muted loop playsinline preload="auto"></video>
+            <span class="project-card__pill">THE SOFA CO.</span>
+            <button class="project-card__expand-btn" aria-label="View case study">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="project-card__info">
+            <div class="project-card__meta">
+              <span class="project-card__tag">LIFESTYLE ADS</span>
+              <span class="project-card__divider"></span>
+              <span class="project-card__index">06 / 06</span>
+            </div>
+            <h3 class="project-card__name">Luxury Living Experience</h3>
+            <p class="project-card__desc">Warm lighting and slow-motion panning showcasing bespoke Italian leather sectionals.</p>
+            <button class="project-card__case-btn" type="button">
+              <span>VIEW CASE STUDY</span>
+              <span class="case-btn-arrow">→</span>
+            </button>
           </div>
         </div>
 
@@ -1224,12 +1300,13 @@
     </div>
   </div>
 
-  <!-- ==================== CONTACT & FOOTER SECTION (#contact) ==================== -->
-  <section class="contact-footer-section" id="contact">
-    <div class="contact-awning-divider"></div>
+  <!-- ==================== CONTACT SECTION (#contact) ==================== -->
+  <section class="contact-section" id="contact">
+    <!-- Downward Yellow Scallop Divider -->
+    <div class="scallop-divider scallop-divider--yellow-down" aria-hidden="true"></div>
 
-    <div class="contact-footer-wrap">
-      <div class="container contact-footer-container">
+    <div class="contact-wrap">
+      <div class="container">
 
         <!-- White Quote Card -->
         <div class="quote-card reveal-on-scroll">
@@ -1252,8 +1329,13 @@
               </div>
 
               <div class="quote-form__group">
+                <label for="contactPhone" class="quote-form__label">Phone</label>
+                <input type="tel" id="contactPhone" name="phone" class="quote-form__input" autocomplete="tel" />
+              </div>
+
+              <div class="quote-form__group">
                 <label for="contactMsg" class="quote-form__label">Message</label>
-                <textarea id="contactMsg" name="message" class="quote-form__textarea" rows="3" required></textarea>
+                <textarea id="contactMsg" name="message" class="quote-form__textarea" rows="2" required></textarea>
               </div>
 
               <button type="submit" class="quote-form__submit" id="submitBtn">Submit Message</button>
@@ -1265,21 +1347,33 @@
           </div>
         </div>
 
-        <!-- Black Rounded Footer Card -->
-        <footer class="footer-card reveal-on-scroll">
-          <div class="footer-card__col footer-card__col--contact">
-            <div class="footer-card__group">
-              <h3 class="footer-card__heading">PHONE</h3>
-              <a href="tel:+918269149313" class="footer-card__text">+91 8269149313</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER SECTION (#footer) ==================== -->
+  <footer class="footer-section" id="footer">
+    <div class="footer-frame">
+      <!-- Decorative Yellow Plus Border Left -->
+      <div class="footer-plus-left" aria-hidden="true"></div>
+
+      <div class="footer-inner container">
+        <div class="footer-grid">
+          <!-- Col 1: Contact Details -->
+          <div class="footer-col footer-col--contact">
+            <div class="footer-contact-group">
+              <h3 class="footer-heading">PHONE</h3>
+              <a href="tel:+918269149313" class="footer-contact-link">+91 8269149313</a>
             </div>
-            <div class="footer-card__group">
-              <h3 class="footer-card__heading">Email</h3>
-              <a href="mailto:bendthetrend0328@gmail.com" class="footer-card__text">bendthetrend0328@gmail.com</a>
+            <div class="footer-contact-group">
+              <h3 class="footer-heading">EMAIL</h3>
+              <a href="mailto:bendthetrend0328@gmail.com" class="footer-contact-link">bendthetrend0328@gmail.com</a>
             </div>
           </div>
 
-          <div class="footer-card__col footer-card__col--nav">
-            <ul class="footer-card__nav-list">
+          <!-- Col 2: Navigation Links -->
+          <div class="footer-col footer-col--nav">
+            <ul class="footer-link-list">
               <li><a href="#hero">Home</a></li>
               <li><a href="#services">Services</a></li>
               <li><a href="#benefits">Benefits</a></li>
@@ -1289,8 +1383,9 @@
             </ul>
           </div>
 
-          <div class="footer-card__col footer-card__col--social">
-            <ul class="footer-card__nav-list">
+          <!-- Col 3: Social Links -->
+          <div class="footer-col footer-col--social">
+            <ul class="footer-link-list">
               <li><a href="https://www.linkedin.com/company/bendthetrendofficial/" target="_blank" rel="noopener">Linkedin</a></li>
               <li><a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a></li>
               <li><a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a></li>
@@ -1298,11 +1393,13 @@
               <li><a href="https://youtube.com" target="_blank" rel="noopener">Youtube</a></li>
             </ul>
           </div>
-        </footer>
-
+        </div>
       </div>
+
+      <!-- Decorative Yellow Plus Border Bottom -->
+      <div class="footer-plus-bottom" aria-hidden="true"></div>
     </div>
-  </section>
+  </footer>
 
   <!-- ==================== FLOATING BACK TO TOP ==================== -->
   <a href="#hero" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>

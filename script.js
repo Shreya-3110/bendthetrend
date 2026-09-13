@@ -564,23 +564,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function bindCardClicks(container = document) {
-    const videoCards = container.querySelectorAll('.video-card:not(.reel-card)');
-    videoCards.forEach(card => {
+    const allCards = container.querySelectorAll('.project-card, .video-card');
+    allCards.forEach(card => {
       if (card.__hasModalClick) return;
       card.__hasModalClick = true;
 
-      card.addEventListener('click', () => {
-        const title = card.getAttribute('data-title') || card.querySelector('.project-card__name')?.textContent;
-        const desc = card.getAttribute('data-desc') || card.querySelector('.project-card__desc')?.textContent;
-        const videoSrc = card.getAttribute('data-video');
-        const embedSrc = card.getAttribute('data-embed');
-        const imageSrc = card.getAttribute('data-image');
-        const imagesAttr = card.getAttribute('data-images');
-        const imagesList = imagesAttr ? imagesAttr.split(',').map(s => s.trim()).filter(Boolean) : null;
-        if (videoSrc || embedSrc || imageSrc || imagesList) {
-          openModal(title, desc, videoSrc, embedSrc, imageSrc, imagesList);
-        }
+      const triggerButtons = card.querySelectorAll('.project-card__case-btn, .project-card__expand-btn');
+      triggerButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const title = card.getAttribute('data-title') || card.querySelector('.project-card__name')?.textContent;
+          const desc = card.getAttribute('data-desc') || card.querySelector('.project-card__desc')?.textContent;
+          const videoSrc = card.getAttribute('data-video');
+          const embedSrc = card.getAttribute('data-embed');
+          const imageSrc = card.getAttribute('data-image');
+          const imagesAttr = card.getAttribute('data-images');
+          const imagesList = imagesAttr ? imagesAttr.split(',').map(s => s.trim()).filter(Boolean) : null;
+          if (videoSrc || embedSrc || imageSrc || imagesList) {
+            openModal(title, desc, videoSrc, embedSrc, imageSrc, imagesList);
+          }
+        });
       });
+
+      if (!card.classList.contains('reel-card')) {
+        card.addEventListener('click', () => {
+          const title = card.getAttribute('data-title') || card.querySelector('.project-card__name')?.textContent;
+          const desc = card.getAttribute('data-desc') || card.querySelector('.project-card__desc')?.textContent;
+          const videoSrc = card.getAttribute('data-video');
+          const embedSrc = card.getAttribute('data-embed');
+          const imageSrc = card.getAttribute('data-image');
+          const imagesAttr = card.getAttribute('data-images');
+          const imagesList = imagesAttr ? imagesAttr.split(',').map(s => s.trim()).filter(Boolean) : null;
+          if (videoSrc || embedSrc || imageSrc || imagesList) {
+            openModal(title, desc, videoSrc, embedSrc, imageSrc, imagesList);
+          }
+        });
+      }
     });
   }
   bindCardClicks();
