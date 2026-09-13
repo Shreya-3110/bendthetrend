@@ -23,9 +23,9 @@
   --border-dark: #121212;
   --border-light: rgba(255, 255, 255, 0.15);
 
-  --font-display: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Anton', sans-serif;
   --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Anton', sans-serif;
 
   --radius-lg: 32px;
   --radius-md: 20px;
@@ -259,24 +259,22 @@ button {
 
 .hero__headline {
   font-family: var(--font-display);
-  font-size: clamp(48px, 8.8vw, 130px);
-  font-weight: 900;
+  font-size: clamp(56px, 10.5vw, 150px);
   color: var(--accent-yellow);
   line-height: 1.0;
-  text-transform: uppercase;
-  letter-spacing: -0.025em;
+  text-transform: none;
+  letter-spacing: 0;
   margin: 0;
   white-space: nowrap;
 }
 
 .hero__subheadline {
   font-family: var(--font-display);
-  font-size: clamp(18px, 3.2vw, 42px);
-  font-weight: 700;
+  font-size: clamp(22px, 3.8vw, 50px);
   color: #FFFFFF;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
   margin-top: 14px;
 }
 
@@ -489,12 +487,11 @@ button {
 
 .section-heading {
   font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(34px, 5.5vw, 68px);
-  text-transform: uppercase;
-  line-height: 1.08;
+  font-size: clamp(40px, 6.8vw, 86px);
+  text-transform: none;
+  line-height: 1.05;
   color: var(--text-dark);
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 .section-heading--white {
@@ -508,12 +505,12 @@ button {
   align-items: center;
   text-align: center;
   font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(34px, 5.4vw, 70px);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: clamp(42px, 7vw, 92px);
+  line-height: 1.04;
+  letter-spacing: 0;
+  text-transform: none;
   margin-bottom: 40px;
-  gap: clamp(72px, 8.5vw, 108px);
+  gap: clamp(74px, 8.5vw, 110px);
 }
 
 .section-heading--stacked span {
@@ -2691,12 +2688,13 @@ button {
 }
 
 .portfolio-hero__title {
-  font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 5vw, 4.2rem);
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  text-transform: none;
   margin: 24px 0 16px;
   color: var(--text-dark);
-  line-height: 1.1;
+  line-height: 1.08;
+  letter-spacing: 0;
 }
 
 .portfolio-hero__desc {
