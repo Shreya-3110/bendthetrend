@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/admin/admin.css" />
+  <link rel="stylesheet" href="/admin/admin.css?v=2.5" />
   <link rel="icon" href="/assets/img_1.png" />
 </head>
 <body>
@@ -126,44 +126,52 @@
 
         <!-- Controls / Filter / Actions Toolbar -->
         <div class="toolbar">
-          <div class="toolbar__left">
+          <div class="toolbar__primary">
             <div class="search-box">
               <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input type="text" id="searchInput" class="search-input" placeholder="Search by title, brand, or tag..." />
             </div>
             
-            <!-- Brand Filter -->
-            <select id="brandFilter" class="select-filter">
-              <option value="all">All Brands</option>
-              <!-- Dynamically populated via admin.js -->
-            </select>
-
-            <!-- Category Filter -->
-            <select id="categoryFilter" class="select-filter">
-              <option value="all">All Categories</option>
-              <option value="video">Reels & Video</option>
-              <option value="branding">Branding & Web</option>
-              <option value="social">Social Campaigns</option>
-              <option value="ads">Performance Ads</option>
-              <option value="healthcare">Healthcare & Dental</option>
-            </select>
-
-            <!-- Status Filter -->
-            <select id="statusFilter" class="select-filter">
-              <option value="all">All Statuses</option>
-              <option value="published">Published Only</option>
-              <option value="draft">Drafts Only</option>
-            </select>
+            <div class="toolbar__actions">
+              <button id="manageBrandsBtn" class="btn btn--subtle">
+                <span class="btn__icon">🏢</span>
+                <span>Manage Brands</span>
+              </button>
+              <button id="addProjectBtn" class="btn btn--primary">
+                <span class="btn__icon">+</span>
+                <span>Add New Project</span>
+              </button>
+            </div>
           </div>
 
-          <div class="toolbar__right">
-            <button id="manageBrandsBtn" class="btn btn--subtle">
-              <span class="btn__icon">🏢</span>
-              <span>Manage Brands</span>
-            </button>
-            <button id="addProjectBtn" class="btn btn--primary">
-              <span class="btn__icon">+</span>
-              <span>Add New Project</span>
+          <div class="toolbar__secondary">
+            <div class="toolbar__filters">
+              <!-- Brand Filter -->
+              <select id="brandFilter" class="select-filter">
+                <option value="all">All Brands</option>
+                <!-- Dynamically populated via admin.js -->
+              </select>
+
+              <!-- Category Filter -->
+              <select id="categoryFilter" class="select-filter">
+                <option value="all">All Categories</option>
+                <option value="video">Reels & Video</option>
+                <option value="branding">Branding & Web</option>
+                <option value="social">Social Campaigns</option>
+                <option value="ads">Performance Ads</option>
+                <option value="healthcare">Healthcare & Dental</option>
+              </select>
+
+              <!-- Status Filter -->
+              <select id="statusFilter" class="select-filter">
+                <option value="all">All Statuses</option>
+                <option value="published">Published Only</option>
+                <option value="draft">Drafts Only</option>
+              </select>
+            </div>
+
+            <button id="resetDemoDataBtn" class="btn btn--subtle btn--sm" title="Reload fresh demo projects and fix broken local storage data">
+              <span>🔄 Reset Demo Data</span>
             </button>
           </div>
         </div>
@@ -173,16 +181,16 @@
           <table class="projects-table">
             <thead>
               <tr>
-                <th width="70">Order</th>
-                <th width="85">Media</th>
-                <th>Project</th>
-                <th>Brand / Client</th>
-                <th>Category</th>
-                <th>Type</th>
-                <th>Metric Badge</th>
-                <th width="90">Featured</th>
-                <th width="110">Status</th>
-                <th width="120" style="text-align: right;">Actions</th>
+                <th style="width: 65px;">Order</th>
+                <th style="width: 75px;">Media</th>
+                <th style="width: 240px;">Project</th>
+                <th style="width: 170px;">Brand / Client</th>
+                <th style="width: 140px;">Category</th>
+                <th style="width: 105px;">Type</th>
+                <th style="width: 125px;">Metric Badge</th>
+                <th style="width: 85px;">Featured</th>
+                <th style="width: 85px;">Status</th>
+                <th style="width: 95px; text-align: right;">Actions</th>
               </tr>
             </thead>
             <tbody id="projectsTableBody">

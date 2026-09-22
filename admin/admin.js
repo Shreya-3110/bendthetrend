@@ -550,7 +550,9 @@ function saveLocalBrands() {
 async function loadProjects() {
   if (!isSupabaseConfigured()) {
     const stored = localStorage.getItem('btt_demo_projects');
-    projectsList = stored ? JSON.parse(stored) : [...SEED_PROJECTS];
+    const loaded = stored ? JSON.parse(stored) : [...SEED_PROJECTS];
+    projectsList = sanitizeProjectList(loaded);
+    saveLocalProjects(); // Persist healed paths to localStorage
     // Reconcile missing brand_ids from client names
     reconcileProjectBrands();
     projectsList.sort((a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0));
@@ -1190,6 +1192,17 @@ function initEventListeners() {
   categoryFilter.addEventListener('change', renderProjectsTable);
   statusFilter.addEventListener('change', renderProjectsTable);
 
+  const resetDemoDataBtn = document.getElementById('resetDemoDataBtn');
+  if (resetDemoDataBtn) {
+    resetDemoDataBtn.addEventListener('click', () => {
+      localStorage.removeItem('btt_demo_projects');
+      localStorage.removeItem('btt_demo_brands');
+      loadBrands();
+      loadProjects();
+      showToast('Demo data reset to clean factory defaults!', 'success');
+    });
+  }
+
   // Project Modal actions
   addProjectBtn.addEventListener('click', openAddModal);
   emptyAddBtn.addEventListener('click', openAddModal);
@@ -1334,4 +1347,22 @@ function normalizeAssetUrl(url) {
   }
   if (url.startsWith('/')) return url;
   return '/' + url;
+}
+
+function sanitizeProjectList(list) {
+  if (!Array.isArray(list)) return [...SEED_PROJECTS];
+  return list.map(p => {
+    let thumb = p.thumbnail_url || '';
+    if (!thumb || thumb.includes('pulse_fitness') || !thumb.startsWith('/')) {
+      const client = (p.client || '').toLowerCase();
+      if (client.includes('jewel')) thumb = '/assets/mg_jewellers.jpg';
+      else if (client.includes('sofa')) thumb = '/assets/indian_sofa_company.jpg';
+      else if (client.includes('dental')) thumb = '/assets/Arihant Dental care/photo_2026-08-21_19-29-23.jpg';
+      else if (client.includes('pulse')) thumb = '/assets/img_25.png';
+      else thumb = p.media_type === 'video' ? '/assets/mg_jewellers.jpg' : '/assets/img_1.png';
+    }
+    p.thumbnail_url = normalizeAssetUrl(thumb);
+    if (p.media_url) p.media_url = normalizeAssetUrl(p.media_url);
+    return p;
+  });
 }
