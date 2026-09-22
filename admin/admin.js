@@ -136,11 +136,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function checkConfiguration() {
+  const demoAuthBox = document.getElementById('demoAuthBox');
+  const authDivider = document.getElementById('authDivider');
+
   if (!isSupabaseConfigured()) {
+    if (demoAuthBox) demoAuthBox.style.display = 'block';
+    if (authDivider) authDivider.style.display = 'flex';
+    configAlert.style.display = 'none';
+  } else {
+    if (demoAuthBox) demoAuthBox.style.display = 'none';
+    if (authDivider) authDivider.style.display = 'none';
     configAlert.style.display = 'block';
+    configAlert.className = 'alert alert--info';
     configAlert.innerHTML = `
-      <strong>Demo Mode Active:</strong> Supabase credentials are not configured in <code>.env</code>.
-      Running with persistent local storage. Full Brand / Client management is fully testable.
+      <strong>Connected to Supabase:</strong> Live backend connection active. Sign in with your registered admin credentials.
     `;
   }
 }
@@ -658,8 +667,9 @@ function renderProjectsTable() {
     const mediaIcon = project.media_type === 'video' ? '🎬 Video' :
                       project.media_type === 'gallery' ? '🖼️ Gallery' : '📷 Image';
 
-    const thumbSrc = project.thumbnail_url || 
+    const rawThumb = project.thumbnail_url || 
                      (project.media_type === 'video' ? '/assets/mg_jewellers.jpg' : '/assets/img_1.png');
+    const thumbSrc = normalizeAssetUrl(rawThumb);
 
     return `
       <tr data-id="${project.id}">
@@ -847,7 +857,7 @@ function openEditModal(id) {
   clearMediaPreviews();
   if (project.thumbnail_url) {
     projectThumbnailUrl.value = project.thumbnail_url;
-    thumbnailPreviewImg.src = project.thumbnail_url;
+    thumbnailPreviewImg.src = normalizeAssetUrl(project.thumbnail_url);
     thumbnailPreviewWrap.style.display = 'inline-block';
     thumbnailPlaceholder.style.display = 'none';
   }
@@ -855,7 +865,7 @@ function openEditModal(id) {
   // Video preview
   if (project.media_url && project.media_type === 'video') {
     projectVideoUrl.value = project.media_url;
-    videoPreviewEl.src = project.media_url;
+    videoPreviewEl.src = normalizeAssetUrl(project.media_url);
     videoPreviewWrap.style.display = 'inline-block';
     videoPlaceholder.style.display = 'none';
   }
@@ -1132,7 +1142,7 @@ function renderGalleryStrip() {
     const div = document.createElement('div');
     div.className = 'gallery-thumb-item';
     div.innerHTML = `
-      <img src="${item.url}" alt="Gallery item" />
+      <img src="${normalizeAssetUrl(item.url)}" alt="Gallery item" />
       <button type="button" class="gallery-thumb-remove" data-index="${index}" title="Remove image">✕</button>
     `;
     div.querySelector('.gallery-thumb-remove').addEventListener('click', () => {
@@ -1160,9 +1170,19 @@ function renderGalleryStrip() {
 
 // ==================== HELPERS & EVENT LISTENERS ====================
 function initEventListeners() {
-  // Login form
+  // Login form & Quick Demo Login
   loginForm.addEventListener('submit', handleLogin);
   logoutBtn.addEventListener('click', handleLogout);
+
+  const quickDemoLoginBtn = document.getElementById('quickDemoLoginBtn');
+  if (quickDemoLoginBtn) {
+    quickDemoLoginBtn.addEventListener('click', async () => {
+      localStorage.setItem('btt_admin_demo_session', JSON.stringify({ email: 'admin@bendthetrend.com' }));
+      currentUser = { email: 'admin@bendthetrend.com' };
+      await showDashboard();
+      showToast('Welcome to Demo Dashboard! (All edits saved locally)', 'success');
+    });
+  }
 
   // Search & Filters
   searchInput.addEventListener('input', renderProjectsTable);
@@ -1305,4 +1325,13 @@ function escapeHtml(str) {
   return str.replace(/[&<>'"]/g, 
     tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
   );
+}
+
+function normalizeAssetUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:')) {
+    return url;
+  }
+  if (url.startsWith('/')) return url;
+  return '/' + url;
 }

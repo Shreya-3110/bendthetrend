@@ -49,19 +49,37 @@
           <p class="auth-card__subtitle">Enter your agency credentials to manage portfolio projects & brands</p>
         </div>
 
-        <div class="alert alert--info" id="configAlert" style="display: none;">
-          <strong>Notice:</strong> Supabase keys are not set in <code>.env</code>. Running in interactive demo mode with persistent local storage.
+        <div class="demo-auth-box" id="demoAuthBox" style="display: none;">
+          <div class="demo-auth-box__title">
+            <span>⚡ Interactive Demo Mode</span>
+          </div>
+          <p class="demo-auth-box__text">
+            Supabase is currently running in local demonstration mode. You can log in with 1 click or use the pre-filled credentials below:
+          </p>
+          <div class="demo-auth-box__creds">
+            <span class="demo-cred-tag">Email: <code>admin@bendthetrend.com</code></span>
+            <span class="demo-cred-tag">Password: <code>admin123</code></span>
+          </div>
+          <button type="button" id="quickDemoLoginBtn" class="btn--demo">
+            <span>⚡ Enter Demo Dashboard Instantly</span>
+          </button>
         </div>
+
+        <div class="auth-divider" id="authDivider" style="display: none;">
+          <span>or sign in manually</span>
+        </div>
+
+        <div class="alert alert--info" id="configAlert" style="display: none;"></div>
 
         <form id="loginForm" class="auth-form">
           <div class="form-field">
             <label for="loginEmail" class="form-label">Email Address</label>
-            <input type="email" id="loginEmail" class="form-input" placeholder="admin@bendthetrend.com" required autocomplete="email" />
+            <input type="email" id="loginEmail" class="form-input" value="admin@bendthetrend.com" placeholder="admin@bendthetrend.com" required autocomplete="email" />
           </div>
 
           <div class="form-field">
             <label for="loginPassword" class="form-label">Password</label>
-            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••••••" required autocomplete="current-password" />
+            <input type="password" id="loginPassword" class="form-input" value="admin123" placeholder="••••••••••••" required autocomplete="current-password" />
           </div>
 
           <div class="form-alert form-alert--error" id="loginError" style="display: none;"></div>
@@ -71,6 +89,10 @@
             <span class="btn__spinner" style="display: none;"></span>
           </button>
         </form>
+
+        <div class="auth-card__back">
+          <a href="/portfolio.html" class="auth-card__back-link">← Back to Portfolio</a>
+        </div>
 
         <div class="auth-card__footer">
           <p>Protected area for authorized Bend the Trend team members.</p>
